@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -121,6 +121,16 @@ export default function ServicesSection() {
   const dotRefs        = useRef<(HTMLDivElement | null)[]>([])
   const activeRef      = useRef(0)
 
+  const [isMobile, setIsMobile] = useState(false)
+
+  /* ── Detekce mobilního zařízení ─────────────────────── */
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check, { passive: true })
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
@@ -228,6 +238,14 @@ export default function ServicesSection() {
     }
   }, [])
 
+  /* ── Vypočítané rozměry prstenu ─────────────────────── */
+  const ringSize = isMobile
+    ? Math.min(220, typeof window !== 'undefined' ? window.innerWidth - 64 : 260)
+    : SVG_SIZE
+  const scale     = ringSize / SVG_SIZE
+  const cardSize  = Math.round(168 * scale)
+  const iconSize  = Math.round(70  * scale)
+
   /* ─────────────────────────────────────────────────────
      JSX
   ───────────────────────────────────────────────────── */
@@ -257,12 +275,17 @@ export default function ServicesSection() {
       </div>
 
       {/* ── Layout ──────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-8 lg:px-16"
-        style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(3rem, 8vw, 8rem)', alignItems: 'center' }}>
+      <div
+        className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 lg:px-16"
+        style={isMobile
+          ? { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.75rem', paddingTop: 72 }
+          : { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(3rem, 8vw, 8rem)', alignItems: 'center' }
+        }
+      >
 
         {/* ── Levá strana — orbit ring ─────────────────── */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ position: 'relative', width: SVG_SIZE, height: SVG_SIZE }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: ringSize, height: ringSize }}>
 
             {/* Záře za vším */}
             <div style={{
@@ -275,25 +298,29 @@ export default function ServicesSection() {
             }} />
 
             {/* Ghost číslo v pozadí */}
-            <span
-              ref={ghostNumRef}
-              style={{
-                position: 'absolute',
-                top: -20, left: -10,
-                fontSize: '9rem',
-                fontWeight: 900,
-                color: 'rgba(255,255,255,0.04)',
-                lineHeight: 1,
-                pointerEvents: 'none',
-                userSelect: 'none',
-                fontFamily: 'Roboto, sans-serif',
-                zIndex: 0,
-              }}
-            >01</span>
+            {!isMobile && (
+              <span
+                ref={ghostNumRef}
+                style={{
+                  position: 'absolute',
+                  top: -20, left: -10,
+                  fontSize: '9rem',
+                  fontWeight: 900,
+                  color: 'rgba(255,255,255,0.04)',
+                  lineHeight: 1,
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                  fontFamily: 'Roboto, sans-serif',
+                  zIndex: 0,
+                }}
+              >01</span>
+            )}
 
-            {/* SVG prsteny */}
+            {/* SVG prsteny — viewBox umožňuje responzivní škálování */}
             <svg
-              width={SVG_SIZE} height={SVG_SIZE}
+              viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`}
+              width={ringSize}
+              height={ringSize}
               style={{ position: 'absolute', top: 0, left: 0, zIndex: 1, overflow: 'visible' }}
             >
               <defs>
@@ -369,22 +396,16 @@ export default function ServicesSection() {
               position: 'absolute',
               top: '50%', left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 168, height: 168,
-              borderRadius: 24,
+              width: cardSize, height: cardSize,
+              borderRadius: Math.round(24 * scale),
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               zIndex: 2,
               overflow: 'hidden',
             }}>
-              {/* Rohové dekorace */}
-              {[
-              ].map((s, ci) => (
-                <div key={ci} style={{ position: 'absolute', width: 14, height: 14,}} />
-              ))}
-
               {/* Překryté ikony — pouze jedna viditelná */}
-              <div style={{ position: 'relative', width: 70, height: 70 }}>
+              <div style={{ position: 'relative', width: iconSize, height: iconSize }}>
                 {SERVICES.map(({ Icon }, i) => (
                   <div
                     key={i}
@@ -404,10 +425,10 @@ export default function ServicesSection() {
           </div>
         </div>
 
-        {/* ── Pravá strana — text (původní, beze změn) ── */}
-        <div>
+        {/* ── Pravá strana — text ─────────────────────── */}
+        <div style={{ width: '100%' }}>
           {/* Label */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: isMobile ? 16 : 32 }}>
             <div style={{ width: 28, height: 1, background: 'rgba(30,113,201,0.7)' }} />
             <span style={{ color: 'rgba(30,113,201,0.85)', fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
               Naše služby
@@ -415,7 +436,7 @@ export default function ServicesSection() {
           </div>
 
           {/* Překryté textové panely */}
-          <div style={{ position: 'relative', minHeight: 380 }}>
+          <div style={{ position: 'relative', minHeight: isMobile ? 220 : 380 }}>
             {SERVICES.map(({ title, desc, details }, i) => (
               <div
                 key={i}
@@ -423,8 +444,14 @@ export default function ServicesSection() {
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
               >
                 {/* Počítadlo */}
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 20 }}>
-                  <span style={{ fontSize: '3.8rem', fontWeight: 900, color: 'rgba(255,255,255,0.07)', lineHeight: 1, fontFamily: 'Roboto, system-ui, sans-serif' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: isMobile ? 10 : 20 }}>
+                  <span style={{
+                    fontSize: isMobile ? '2.4rem' : '3.8rem',
+                    fontWeight: 900,
+                    color: 'rgba(255,255,255,0.07)',
+                    lineHeight: 1,
+                    fontFamily: 'Roboto, system-ui, sans-serif',
+                  }}>
                     0{i + 1}
                   </span>
                   <span style={{ color: 'rgba(255,255,255,0.22)', fontSize: 14 }}>/ 0{N}</span>
@@ -433,32 +460,40 @@ export default function ServicesSection() {
                 {/* Nadpis */}
                 <h2 style={{
                   fontFamily: 'Roboto, system-ui, sans-serif', fontWeight: 900,
-                  fontSize: 'clamp(1.8rem, 2.8vw, 2.5rem)',
-                  color: '#fff', lineHeight: 1.15, marginBottom: 20,
+                  fontSize: isMobile ? 'clamp(1.3rem, 5vw, 1.7rem)' : 'clamp(1.8rem, 2.8vw, 2.5rem)',
+                  color: '#fff', lineHeight: 1.15, marginBottom: isMobile ? 10 : 20,
                 }}>
                   {title}
                 </h2>
 
                 {/* Popis */}
-                <p style={{ color: 'rgba(255,255,255,0.58)', fontSize: '0.95rem', lineHeight: 1.8, marginBottom: 28, maxWidth: 460 }}>
+                <p style={{
+                  color: 'rgba(255,255,255,0.58)',
+                  fontSize: isMobile ? '0.85rem' : '0.95rem',
+                  lineHeight: 1.75,
+                  marginBottom: isMobile ? 0 : 28,
+                  maxWidth: 460,
+                }}>
                   {desc}
                 </p>
 
-                {/* Detaily */}
-                <ul style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
-                  {details.map((d, j) => (
-                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'rgba(255,255,255,0.72)', fontSize: '0.875rem' }}>
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#1E71C9', flexShrink: 0, boxShadow: '0 0 7px rgba(30,113,201,0.9)' }} />
-                      {d}
-                    </li>
-                  ))}
-                </ul>
+                {/* Detaily — skryté na mobilu */}
+                {!isMobile && (
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+                    {details.map((d, j) => (
+                      <li key={j} style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'rgba(255,255,255,0.72)', fontSize: '0.875rem' }}>
+                        <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#1E71C9', flexShrink: 0, boxShadow: '0 0 7px rgba(30,113,201,0.9)' }} />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
 
           {/* Progress tečky */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 44 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: isMobile ? 20 : 44 }}>
             {SERVICES.map((_, i) => (
               <div
                 key={i}
