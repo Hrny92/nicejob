@@ -17,22 +17,8 @@ export default function HeroSection() {
       const headline = headlineRef.current
       if (!headline) return
 
-      /* ── Word-reveal split (podporuje \n → <br>) ─────────── */
-      /* padding-top + záporný margin-top = prostor pro háčky/čárky */
-      /* které přesahují nad cap-height a overflow:hidden by uřízl  */
-      const rawText = headline.getAttribute('data-text') || headline.innerText
-      headline.innerHTML = rawText
-        .split('\n')
-        .map((line, i, arr) =>
-          line.trim().split(' ').map((w) =>
-            `<span class="word-outer" style="display:inline-block;overflow:hidden;vertical-align:bottom;padding-top:0.18em;margin-top:-0.18em;">` +
-            `<span class="word-inner" style="display:inline-block;padding-bottom:0.05em;">${w}</span>` +
-            `</span>`
-          ).join(' ') + (i < arr.length - 1 ? '<br>' : '')
-        )
-        .join('')
-
-      const wordInners = headline.querySelectorAll<HTMLElement>('.word-inner')
+      // Animujeme přímo oba spany nadpisu (bez word-split, který by zničil styling)
+      const headlineLines = headline.querySelectorAll<HTMLElement>('span')
 
       /* ── Master timeline ───────────────────────────────── */
       const tl = gsap.timeline({ delay: 0.15, defaults: { ease: 'power3.out' } })
@@ -59,12 +45,13 @@ export default function HeroSection() {
         duration: 0.65,
       }, 0.35)
 
-      // Headline words reveal
-      tl.from(wordInners, {
-        yPercent: 110,
+      // Headline — oba řádky postupně vyjedou zdola
+      tl.from(headlineLines, {
         opacity: 0,
-        duration: 0.75,
-        stagger: 0.055,
+        y: 36,
+        duration: 0.72,
+        stagger: 0.18,
+        ease: 'power3.out',
       }, 0.6)
 
       // Subtitle
@@ -169,7 +156,7 @@ export default function HeroSection() {
                      shadow-sm shadow-brand-blue/10"
         >
           <span
-            className="w-1.5 h-1.5 rounded-full bg-brand-blue"
+            className="w-1.5 h-1.5 rounded-full bg-brand-red"
           />
           HR agentura | Praha
         </div>
@@ -177,14 +164,29 @@ export default function HeroSection() {
         {/* Headline */}
         <h1
           ref={headlineRef}
-          data-text={"NAJDEME TALENT, KTERÝ VAŠÍ FIRMU POSUNE DÁL"}
-          className="font-display font-black
-                     text-[2.8rem] sm:text-5xl md:text-6xl lg:text-7xl
-                     leading-[1.08] tracking-normal
-                     text-brand-blue
-                     mb-8 max-w-7xl"
+          className="mb-8 max-w-5xl"
+          style={{ lineHeight: 1.08 }}
         >
-          NAJDEME TALENT, KTERÝ <br />VAŠÍ FIRMU POSUNE DÁL
+          <span className="block"
+            style={{
+              fontFamily: 'Roboto, system-ui, sans-serif',
+              fontWeight: 900,
+              fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+              color: '#050e1d',
+              marginBottom: 8,
+            }}>
+            Najdeme talent, který
+          </span>
+          <span className="block"
+            style={{
+              fontFamily: 'Georgia, serif',
+              fontStyle: 'italic',
+              fontWeight: 400,
+              fontSize: 'clamp(2.5rem, 6vw, 4.8rem)',
+              color: '#1E71C9',
+            }}>
+            vaší firmu posune dál.
+          </span>
         </h1>
 
         {/* Subtitle */}
@@ -201,7 +203,7 @@ export default function HeroSection() {
         {/* CTA */}
         <div ref={ctaRef}>
           <a
-            href="#kontakt"
+            href="#o-nas"
             className="group inline-flex items-center gap-3
                        bg-brand-dark text-white
                        px-9 py-4 rounded-full

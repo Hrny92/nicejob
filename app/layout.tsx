@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { ContactModalProvider } from '@/context/ContactModalContext'
+import ContactModal from '@/components/ContactModal'
 
 export const metadata: Metadata = {
   title: 'Nice Job | HR agentura Praha',
@@ -21,7 +23,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="antialiased">
-        {children}
+        <ContactModalProvider>
+          {children}
+          <ContactModal />
+        </ContactModalProvider>
       </body>
     </html>
   )

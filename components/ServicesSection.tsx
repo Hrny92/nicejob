@@ -428,9 +428,9 @@ export default function ServicesSection() {
         {/* ── Pravá strana — text ─────────────────────── */}
         <div style={{ width: '100%' }}>
           {/* Label */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: isMobile ? 16 : 32 }}>
-            <div style={{ width: 28, height: 1, background: 'rgba(30,113,201,0.7)' }} />
-            <span style={{ color: 'rgba(30,113,201,0.85)', fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: isMobile ? 16 : 32 }}>
+            <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#be1622', flexShrink: 0 }} />
+            <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
               Naše služby
             </span>
           </div>

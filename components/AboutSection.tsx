@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
+import { useContactModal } from '@/context/ContactModalContext'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -14,6 +15,7 @@ const CHECK_ITEMS = [
 ]
 
 export default function AboutSection() {
+  const { open: openModal } = useContactModal()
   const sectionRef = useRef<HTMLElement>(null)
   const labelRef   = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -135,14 +137,27 @@ export default function AboutSection() {
           </div>
 
           {/* Nadpis */}
-          <h2
-            ref={headingRef}
-            className="font-display font-black uppercase leading-[1.06]
-                       text-4xl sm:text-5xl xl:text-[3.5rem]"
-          >
-            <span className="h-line block text-brand-dark">Vznikli jsme</span>
-            <span className="h-line block text-brand-dark">z potřeby</span>
-            <span className="h-line block text-brand-blue">dělat věci jinak</span>
+          <h2 ref={headingRef} style={{ lineHeight: 1.1 }}>
+            <span className="h-line block"
+              style={{
+                fontFamily: 'Roboto, system-ui, sans-serif',
+                fontWeight: 900,
+                fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+                color: '#050e1d',
+                marginBottom: 6,
+              }}>
+              Vznikli jsme z potřeby
+            </span>
+            <span className="h-line block"
+              style={{
+                fontFamily: 'Georgia, serif',
+                fontStyle: 'italic',
+                fontWeight: 400,
+                fontSize: 'clamp(1.9rem, 3.8vw, 3rem)',
+                color: '#1E71C9',
+              }}>
+              dělat věci jinak.
+            </span>
           </h2>
 
           {/* Tělo */}
@@ -155,7 +170,7 @@ export default function AboutSection() {
           </p>
 
           {/* Checklist */}
-          <ul ref={listRef} className="flex flex-col gap-3.5">
+          <ul ref={listRef} className="flex flex-col gap-3.5 mb-8">
             {CHECK_ITEMS.map((item) => (
               <li key={item} className="flex items-center gap-3 text-gray-700 text-sm font-medium">
                 {/* Zaškrtnutí */}
@@ -176,6 +191,17 @@ export default function AboutSection() {
               </li>
             ))}
           </ul>
+
+          <button
+            onClick={openModal}
+            className="group self-start inline-flex items-center gap-2
+                       bg-brand-dark text-white px-7 py-3.5 rounded-full
+                       text-sm font-semibold transition-all duration-300
+                       hover:bg-brand-mid hover:gap-3"
+          >
+            Jdem do toho
+            <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </button>
         </div>
 
         {/* ── Pravý sloupec — fotka ──────────────────────────── */}

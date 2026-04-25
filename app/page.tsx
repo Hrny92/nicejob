@@ -1,8 +1,12 @@
-import Navbar          from '@/components/Navbar'
-import HeroSection     from '@/components/HeroSection'
-import AboutSection    from '@/components/AboutSection'
-import ServicesSection from '@/components/ServicesSection'
-import ContactDrawer   from '@/components/ContactDrawer'
+import Navbar             from '@/components/Navbar'
+import HeroSection        from '@/components/HeroSection'
+import AboutSection       from '@/components/AboutSection'
+import ServicesSection    from '@/components/ServicesSection'
+import WhyUsSection       from '@/components/WhyUsSection'
+import ReferencesSection  from '@/components/ReferencesSection'
+import Footer             from '@/components/Footer'
+import ContactDrawer      from '@/components/ContactDrawer'
+import CookieBanner       from '@/components/CookieBanner'
 
 export default function Home() {
   return (
@@ -11,16 +15,15 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
-
-      {/* Placeholder — další sekce přijdou */}
-      <section className="min-h-[30vh] flex items-center justify-center bg-white">
-        <p className="text-gray-200 text-sm tracking-widest uppercase">
-          Další sekce brzy…
-        </p>
-      </section>
+      <WhyUsSection />
+      <ReferencesSection />
+      <Footer />
 
       {/* Globální plovoucí kontakt */}
       <ContactDrawer />
+
+      {/* Cookie lišta */}
+      <CookieBanner />
     </main>
   )
 }

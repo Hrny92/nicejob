@@ -13,6 +13,7 @@ const config: Config = {
           dark:  '#0B294A',
           mid:   '#13467D',
           blue:  '#1E71C9',
+          red:   '#be1622',
         },
       },
       fontFamily: {

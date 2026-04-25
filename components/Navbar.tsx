@@ -4,16 +4,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
+import { useContactModal } from '@/context/ContactModalContext'
 
 const navLinks = [
   { label: 'O nás',     href: '#o-nas'     },
   { label: 'Služby',    href: '#sluzby'    },
   { label: 'Proč my',   href: '#proc-my'   },
   { label: 'Reference', href: '#reference' },
-  { label: 'Kontakt',   href: '#kontakt'   },
 ]
 
 export default function Navbar() {
+  const { open: openModal } = useContactModal()
   const navRef       = useRef<HTMLElement>(null)
   const logoRef      = useRef<HTMLDivElement>(null)
   const listRef      = useRef<HTMLUListElement>(null)
@@ -102,7 +103,7 @@ export default function Navbar() {
         ref={navRef}
         className={`
           fixed top-0 left-0 right-0 z-50
-          flex items-center justify-between
+          flex items-center
           px-6 md:px-8 lg:px-16 py-5
           transition-all duration-500
           ${scrolled
@@ -115,8 +116,8 @@ export default function Navbar() {
           <Image src="/loga/logo-color.svg" alt="Nice Job" width={100} height={44} priority />
         </div>
 
-        {/* Desktop links */}
-        <ul ref={listRef} className="hidden md:flex items-center gap-8">
+        {/* Desktop links — přesně na středu viewportu */}
+        <ul ref={listRef} className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -132,18 +133,18 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Desktop CTA */}
-        <div ref={ctaRef} className="hidden md:block">
-          <Link
-            href="#kontakt"
+        {/* Desktop CTA — přitlačen doprava */}
+        <div ref={ctaRef} className="hidden md:block ml-auto">
+          <button
+            onClick={openModal}
             className="group inline-flex items-center gap-2
                        bg-brand-dark text-white px-6 py-2.5 rounded-full
                        text-sm font-semibold transition-all duration-300
                        hover:bg-brand-mid hover:shadow-lg hover:shadow-brand-dark/25 hover:gap-3"
           >
-            Kontakt
+            Napiš nám
             <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-          </Link>
+          </button>
         </div>
 
         {/* Hamburger (mobile) */}
@@ -204,16 +205,15 @@ export default function Navbar() {
               ref={el => { menuItemsRef.current[navLinks.length] = el }}
               className="flex flex-col gap-4 mt-8"
             >
-              <Link
-                href="#kontakt"
-                onClick={closeMenu}
+              <button
+                onClick={() => { closeMenu(); setTimeout(openModal, 320) }}
                 className="flex items-center justify-center gap-2
-                           bg-brand-blue text-white px-8 py-4 rounded-full
-                           text-base font-semibold
+                           bg-brand-dark text-white px-8 py-4 rounded-full
+                           text-base font-semibold w-full
                            hover:bg-brand-mid transition-all duration-300"
               >
-                Kontakt →
-              </Link>
+                Napiš nám →
+              </button>
               <p className="text-center text-white/25 text-xs tracking-widest uppercase">
                 Nice Job — HR s přidanou hodnotou
               </p>
