@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPoziceBySlug, getAllPoziceSlugs, TYP_UVAZKU, formatMzda } from '@/lib/queries'
-import { PortableText } from 'next-sanity'
+import { PortableText } from '@portabletext/react'
 
 export const revalidate = 30
 
