@@ -15,11 +15,21 @@ const CONTACT = {
 }
 
 export default function ContactDrawer() {
-  const [visible, setVisible]     = useState(false)   // je drawer v DOM?
-  const [imgError, setImgError]   = useState(false)   // fallback pro fotku
+  const [visible, setVisible]     = useState(false)
+  const [imgError, setImgError]   = useState(false)
+  const [hovered, setHovered]     = useState(false)
+  const hoverTimeout              = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const backdropRef  = useRef<HTMLDivElement>(null)
   const panelRef     = useRef<HTMLDivElement>(null)
+
+  const onMouseEnter = () => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current)
+    setHovered(true)
+  }
+  const onMouseLeave = () => {
+    hoverTimeout.current = setTimeout(() => setHovered(false), 180)
+  }
 
   /* ── Otevření: nejdřív vložit do DOM, pak animovat ────── */
   const open = useCallback(() => {
@@ -78,34 +88,130 @@ export default function ContactDrawer() {
 
   return (
     <>
-      {/* ── Trigger tab ─────────────────────────────────────── */}
-      <button
-        ref={btnRef}
-        onClick={open}
-        aria-label="Rychlý kontakt"
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40
-                   flex flex-col items-center gap-2
-                   bg-brand-blue text-white
-                   px-3 py-5 rounded-l-2xl
-                   shadow-xl shadow-brand-blue/30
-                   transition-colors duration-300 hover:bg-brand-mid
-                   cursor-pointer select-none group"
+      {/* ── Trigger tab + hover karta ───────────────────────── */}
+      <div
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center"
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
-        <svg
-          className="w-4 h-4 mb-1 transition-transform duration-300 group-hover:scale-110"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+        {/* Hover karta */}
+        <div
+          style={{
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? 'translateX(0)' : 'translateX(12px)',
+            pointerEvents: hovered ? 'auto' : 'none',
+            transition: 'opacity 0.22s ease, transform 0.22s ease',
+            marginRight: 8,
+          }}
         >
-          <path strokeLinecap="round" strokeLinejoin="round"
-            d="M2.25 6.338c0-.724.6-1.338 1.32-1.338h2.664c.613 0 1.138.416 1.295 1.01l.737 2.77a1.338 1.338 0 0 1-.54 1.434l-.99.726a11.251 11.251 0 0 0 5.318 5.318l.727-.99a1.338 1.338 0 0 1 1.434-.54l2.77.737c.594.157 1.01.682 1.01 1.295v2.664c0 .72-.614 1.32-1.338 1.32C8.393 21 3 15.607 3 8.888c0-.724-.014-2.55 0-2.55Z"
-          />
-        </svg>
-        <span
-          className="text-[11px] font-semibold tracking-widest uppercase"
-          style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+          <div style={{
+            background: '#fff',
+            borderRadius: 16,
+            boxShadow: '0 8px 32px rgba(11,41,74,0.18)',
+            padding: '16px 18px',
+            width: 210,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 10,
+          }}>
+            {/* Jméno + titul */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{
+                width: 36, height: 36, borderRadius: '50%',
+                background: '#0B294A', flexShrink: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#fff', fontWeight: 800, fontSize: '0.75rem',
+              }}>ZK</div>
+              <div>
+                <p style={{ fontWeight: 700, fontSize: '0.8rem', color: '#050e1d', lineHeight: 1.2 }}>
+                  Zdeňka Kocandová
+                </p>
+                <p style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: 1 }}>
+                  ředitelka společnosti
+                </p>
+              </div>
+            </div>
+
+            {/* Oddělovač */}
+            <div style={{ height: 1, background: '#f1f5f9' }} />
+
+            {/* Telefon */}
+            <a href={`tel:${CONTACT.phone.replace(/\s/g, '')}`}
+              style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+              <div style={{
+                width: 28, height: 28, borderRadius: 8, flexShrink: 0,
+                background: 'rgba(30,113,201,0.1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#1E71C9" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.338c0-.724.6-1.338 1.32-1.338h2.664c.613 0 1.138.416 1.295 1.01l.737 2.77a1.338 1.338 0 0 1-.54 1.434l-.99.726a11.251 11.251 0 0 0 5.318 5.318l.727-.99a1.338 1.338 0 0 1 1.434-.54l2.77.737c.594.157 1.01.682 1.01 1.295v2.664c0 .72-.614 1.32-1.338 1.32C8.393 21 3 15.607 3 8.888c0-.724-.014-2.55 0-2.55Z"/>
+                </svg>
+              </div>
+              <span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#0B294A' }}>
+                {CONTACT.phone}
+              </span>
+            </a>
+
+            {/* Email */}
+            <a href={`mailto:${CONTACT.email}`}
+              style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+              <div style={{
+                width: 28, height: 28, borderRadius: 8, flexShrink: 0,
+                background: 'rgba(30,113,201,0.1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#1E71C9" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/>
+                </svg>
+              </div>
+              <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#0B294A', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {CONTACT.email}
+              </span>
+            </a>
+
+            {/* Klikni pro více */}
+            <button
+              onClick={open}
+              style={{
+                background: '#0B294A', color: '#fff', border: 'none',
+                borderRadius: 999, padding: '7px 0',
+                fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer',
+                marginTop: 2,
+              }}
+            >
+              Zobrazit vše →
+            </button>
+          </div>
+        </div>
+
+        {/* Tab tlačítko */}
+        <button
+          ref={btnRef}
+          onClick={open}
+          aria-label="Rychlý kontakt"
+          className="flex flex-col items-center gap-2
+                     bg-brand-blue text-white
+                     px-3 py-5 rounded-l-2xl
+                     shadow-xl shadow-brand-blue/30
+                     transition-colors duration-300 hover:bg-brand-mid
+                     cursor-pointer select-none group"
         >
-          Rychlý kontakt
-        </span>
-      </button>
+          <svg
+            className="w-4 h-4 mb-1 transition-transform duration-300 group-hover:scale-110"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round"
+              d="M2.25 6.338c0-.724.6-1.338 1.32-1.338h2.664c.613 0 1.138.416 1.295 1.01l.737 2.77a1.338 1.338 0 0 1-.54 1.434l-.99.726a11.251 11.251 0 0 0 5.318 5.318l.727-.99a1.338 1.338 0 0 1 1.434-.54l2.77.737c.594.157 1.01.682 1.01 1.295v2.664c0 .72-.614 1.32-1.338 1.32C8.393 21 3 15.607 3 8.888c0-.724-.014-2.55 0-2.55Z"
+            />
+          </svg>
+          <span
+            className="text-[11px] font-semibold tracking-widest uppercase"
+            style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+          >
+            Rychlý kontakt
+          </span>
+        </button>
+      </div>
 
       {/* ── Drawer — renderuje se jen když visible === true ── */}
       {visible && (

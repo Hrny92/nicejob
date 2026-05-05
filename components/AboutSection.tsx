@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { useContactModal } from '@/context/ContactModalContext'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -25,6 +25,39 @@ export default function AboutSection() {
   const cardRef    = useRef<HTMLDivElement>(null)
 
   const [imgError, setImgError] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
+  const photoContainerRef = useRef<HTMLDivElement>(null)
+  const greenLayerRef     = useRef<HTMLDivElement>(null)
+  const crosshairRef      = useRef<HTMLDivElement>(null)
+
+  // Inicializujeme masku mimo JSX — React ji pak nikdy nepřepisuje
+  useEffect(() => {
+    if (greenLayerRef.current) {
+      const init = 'radial-gradient(circle at -999px -999px, black 65px, transparent 65px)'
+      greenLayerRef.current.style.maskImage = init
+      greenLayerRef.current.style.webkitMaskImage = init
+    }
+  }, [])
+
+  // Aktualizujeme DOM přímo — žádný setState = žádné re-rendery = plynulý pohyb
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = photoContainerRef.current?.getBoundingClientRect()
+    if (!rect) return
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    // Maska: černá (viditelná) uprostřed, průhledná vně
+    if (greenLayerRef.current) {
+      const g = `radial-gradient(circle at ${x}px ${y}px, black 65px, transparent 65px)`
+      greenLayerRef.current.style.maskImage = g
+      greenLayerRef.current.style.webkitMaskImage = g
+    }
+
+    // Zaměřovač sleduje kurzor — centrovaný na pozici myši (150px → offset 75)
+    if (crosshairRef.current) {
+      crosshairRef.current.style.transform = `translate(${x - 75}px, ${y - 75}px)`
+    }
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -162,7 +195,7 @@ export default function AboutSection() {
 
           {/* Tělo */}
           <p ref={bodyRef} className="text-gray-500 leading-relaxed text-[0.95rem] max-w-md">
-            Spojujeme roky zkušeností z MZ Training s dravostí nové značky zaměřené čistě na lidi.{' '}
+            Spojujeme roky zkušeností s dravostí nové značky zaměřené čistě na lidi.{' '}
             <strong className="text-gray-800 font-semibold">
               Nice Job není jen název, je to náš standard.
             </strong>{' '}
@@ -208,47 +241,73 @@ export default function AboutSection() {
         <div ref={imageRef} className="relative">
           <div
             className="relative rounded-3xl overflow-hidden bg-gray-100 shadow-xl shadow-brand-dark/10"
-            style={{ aspectRatio: '4 / 5' }}
+            style={{ aspectRatio: '3 / 4' }}
           >
             {/* Dekorativní rámeček za fotkou */}
             <div
               className="absolute -bottom-4 -right-4 w-full h-full rounded-3xl border-2 border-brand-blue/15 -z-10"
             />
 
-            {!imgError ? (
+            {/* Interaktivní dvouvrstvý obrázek */}
+            <div
+              ref={photoContainerRef}
+              className="absolute inset-0 cursor-none-force"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+            >
+              {/* Spodní vrstva — červené postavičky (vždy viditelné) */}
               <Image
-                src="/onas-photo.jpg"
+                src="/onas-photo-red.png"
                 alt="Tým Nice Job"
                 fill
                 className="object-cover"
-                onError={() => setImgError(true)}
               />
-            ) : (
-              /* Placeholder pokud fotka chybí */
-              <div className="absolute inset-0 flex flex-col items-center justify-center
-                              bg-gradient-to-br from-brand-dark/5 to-brand-blue/10 gap-4">
-                <svg className="w-16 h-16 text-brand-blue/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
-                    d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 18h16.5M4.5 3.75h15a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75h-15a.75.75 0 0 1-.75-.75V4.5a.75.75 0 0 1 .75-.75Z" />
-                </svg>
-                <p className="text-brand-blue/50 text-sm font-medium">
-                  Vložte fotku jako /public/onas-photo.jpg
-                </p>
+
+              {/* Horní vrstva — zelené postavičky, maska aktualizovaná přímo přes ref */}
+              <div
+                ref={greenLayerRef}
+                className="absolute inset-0"
+                style={{
+                  opacity: isHovering ? 1 : 0,
+                  transition: 'opacity 0.25s ease',
+                  // maskImage záměrně NENÍ tady — React by ji přepsal při re-renderu
+                  // Nastavujeme ji čistě imperativně v handleMouseMove
+                }}
+              >
+                <Image
+                  src="/onas-photo-green.png"
+                  alt="Tým Nice Job — zelené postavičky"
+                  fill
+                  className="object-cover"
+                />
               </div>
-            )}
+
+              {/* Viditelný zaměřovač sledující kurzor */}
+              <div
+                ref={crosshairRef}
+                className="absolute top-0 left-0 pointer-events-none"
+                style={{
+                  width: 150,
+                  height: 150,
+                  opacity: isHovering ? 1 : 0,
+                  transition: 'opacity 0.25s ease',
+                  zIndex: 4,
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/loga/zamerovac.svg"
+                  alt=""
+                  width={150}
+                  height={150}
+                  style={{ display: 'block' }}
+                />
+              </div>
+            </div>
 
             {/* Kartička overlay */}
-            <div
-              ref={cardRef}
-              className="absolute bottom-5 left-5 right-5
-                         bg-brand-dark/88 backdrop-blur-md
-                         rounded-2xl px-5 py-4 text-white"
-            >
-              <p className="font-bold text-sm mb-1 tracking-wide">Nová laťka v HR praxi</p>
-              <p className="text-white/65 text-xs leading-relaxed">
-                Od MZ Training k Nice Job — vždy s lidmi v centru pozornosti.
-              </p>
-            </div>
+            
           </div>
         </div>
 

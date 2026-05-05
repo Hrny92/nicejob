@@ -1,0 +1,504 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "Název pozice je povinný"
+          }
+        ],
+        "name": "nazev",
+        "type": "string",
+        "title": "Název pozice"
+      },
+      {
+        "options": {
+          "source": "nazev",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "Slug je povinný"
+          }
+        ],
+        "description": "Automaticky vygenerováno z názvu. Používá se v URL, např. /pozice/senior-recruiter",
+        "name": "slug",
+        "type": "slug",
+        "title": "Slug (URL adresa)"
+      },
+      {
+        "initialValue": true,
+        "description": "Neaktivní inzeráty se nezobrazí na webu",
+        "name": "aktivni",
+        "type": "boolean",
+        "title": "Aktivní inzerát"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Např. Praha, Brno, Remote, Celá ČR",
+        "name": "lokalita",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Plný úvazek",
+              "value": "plny"
+            },
+            {
+              "title": "Částečný úvazek",
+              "value": "castecny"
+            },
+            {
+              "title": "DPP",
+              "value": "dpp"
+            },
+            {
+              "title": "DPČ",
+              "value": "dpc"
+            },
+            {
+              "title": "Remote",
+              "value": "remote"
+            },
+            {
+              "title": "Hybridní",
+              "value": "hybridni"
+            }
+          ],
+          "layout": "grid"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "plny",
+                  "castecny",
+                  "dpp",
+                  "dpc",
+                  "remote",
+                  "hybridni"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "typUvazku",
+        "type": "array",
+        "title": "Typ úvazku"
+      },
+      {
+        "description": "Volitelné — spodní hranice mzdového rozmezí",
+        "name": "mzdaOd",
+        "type": "number",
+        "title": "Mzda od (Kč/měsíc)"
+      },
+      {
+        "description": "Volitelné — horní hranice mzdového rozmezí",
+        "name": "mzdaDo",
+        "type": "number",
+        "title": "Mzda do (Kč/měsíc)"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 200
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Zobrazuje se v přehledu inzerátů — max. 200 znaků",
+        "name": "perex",
+        "type": "text",
+        "title": "Krátký popis (perex)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Detailní popis pracovní pozice a náplně práce",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Tučně"
+                },
+                {
+                  "value": "em",
+                  "title": "Kurzíva"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normální text"
+              },
+              {
+                "value": "h2",
+                "title": "Nadpis H2"
+              },
+              {
+                "value": "h3",
+                "title": "Nadpis H3"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "popis",
+        "type": "array",
+        "title": "Popis pozice"
+      },
+      {
+        "options": {
+          "layout": "tags"
+        },
+        "description": "Každý bod na nový řádek — přidejte pomocí Enter",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "pozadavky",
+        "type": "array",
+        "title": "Požadavky na kandidáta"
+      },
+      {
+        "options": {
+          "layout": "tags"
+        },
+        "description": "Výhody a benefity pozice",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "benefity",
+        "type": "array",
+        "title": "Co nabízíme (benefity)"
+      },
+      {
+        "options": {
+          "dateFormat": "DD. MM. YYYY"
+        },
+        "initialValue": "2026-05-05",
+        "name": "zverejneno",
+        "type": "date",
+        "title": "Datum zveřejnění"
+      }
+    ],
+    "name": "pozice",
+    "type": "document",
+    "title": "Pracovní pozice"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "jmeno",
+        "type": "string",
+        "title": "Jméno"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Např. \"HR Manager · NET4GAS\"",
+        "name": "role",
+        "type": "string",
+        "title": "Pozice / Firma"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 3
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Zobrazí se v avataru, např. \"VŽ\"",
+        "name": "inicialy",
+        "type": "string",
+        "title": "Iniciály (2 znaky)"
+      },
+      {
+        "rows": 5,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "citace",
+        "type": "text",
+        "title": "Text reference"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Modrá tmavá",
+              "value": "#0B294A"
+            },
+            {
+              "title": "Modrá střední",
+              "value": "#13467D"
+            },
+            {
+              "title": "Modrá světlá",
+              "value": "#1E71C9"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "#1E71C9",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "#0B294A",
+                  "#13467D",
+                  "#1E71C9"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "barvaAvataru",
+        "type": "string",
+        "title": "Barva avataru"
+      },
+      {
+        "initialValue": 99,
+        "description": "Nižší číslo = zobrazí se dříve",
+        "name": "poradi",
+        "type": "number",
+        "title": "Pořadí"
+      }
+    ],
+    "name": "recenze",
+    "type": "document",
+    "title": "Reference"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "nazev",
+        "type": "string",
+        "title": "Název firmy"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Pokud logo nevložíte, zobrazí se název firmy jako text",
+        "name": "logo",
+        "type": "image",
+        "title": "Logo (volitelné)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "web",
+        "type": "url",
+        "title": "Web (volitelný odkaz)"
+      },
+      {
+        "initialValue": 99,
+        "description": "Nižší číslo = zobrazí se dříve v liště",
+        "name": "poradi",
+        "type": "number",
+        "title": "Pořadí"
+      }
+    ],
+    "name": "klient",
+    "type": "document",
+    "title": "Klienti (lišta \"Klienti, kteří nám věří\")"
+  }
+]

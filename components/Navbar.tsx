@@ -7,10 +7,11 @@ import { gsap } from 'gsap'
 import { useContactModal } from '@/context/ContactModalContext'
 
 const navLinks = [
-  { label: 'O nás',     href: '#o-nas'     },
-  { label: 'Služby',    href: '#sluzby'    },
-  { label: 'Proč my',   href: '#proc-my'   },
-  { label: 'Reference', href: '#reference' },
+  { label: 'O nás',              href: '#o-nas'              },
+  { label: 'Služby',             href: '#sluzby'             },
+  { label: 'Proč my',            href: '#proc-my'            },
+  { label: 'Pracovní nabídky',   href: '#pracovni-nabidky'   },
+  { label: 'Reference',          href: '#reference'          },
 ]
 
 export default function Navbar() {
