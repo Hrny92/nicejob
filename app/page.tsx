@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Navbar             from '@/components/Navbar'
 import HeroSection        from '@/components/HeroSection'
 import AboutSection       from '@/components/AboutSection'
@@ -9,6 +10,13 @@ import Footer             from '@/components/Footer'
 import ContactDrawer      from '@/components/ContactDrawer'
 import CookieBanner       from '@/components/CookieBanner'
 import { getLatestPozice, getReference, getKlienti, getSluzby, getONas, getProcMy } from '@/lib/queries'
+import { buildMetadata } from '@/lib/seo'
+
+export const metadata: Metadata = buildMetadata({
+  title:       'Nice Job | HR agentura Praha — Nábor & Headhunting',
+  description: 'Moderní HR agentura s lidským přístupem. Komplexní nábor, headhunting a HR poradenství pro firmy v Praze. 200+ obsazených pozic, průměrně za 14 dní.',
+  path:        '',
+})
 
 export const revalidate = 30
 

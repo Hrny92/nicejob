@@ -1,8 +1,17 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllPozice, TYP_UVAZKU, formatMzda, PozicePreview } from '@/lib/queries'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ContactDrawer from '@/components/ContactDrawer'
+import StructuredData from '@/components/StructuredData'
+import { buildMetadata, schemaBreadcrumb, SITE_URL } from '@/lib/seo'
+
+export const metadata: Metadata = buildMetadata({
+  title:       'Pracovní nabídky — HR agentura Nice Job Praha',
+  description: 'Aktuální pracovní nabídky od HR agentury Nice Job. Pozice v Praze a okolí — nábor na klíč s lidským přístupem.',
+  path:        '/pozice',
+})
 
 export const revalidate = 30
 
@@ -68,6 +77,10 @@ export default async function PozicePage() {
 
   return (
     <>
+    <StructuredData schema={schemaBreadcrumb([
+      { name: 'Nice Job', url: SITE_URL },
+      { name: 'Pracovní nabídky', url: `${SITE_URL}/pozice` },
+    ])} />
     <Navbar darkHero />
     <main className="min-h-screen bg-white">
 

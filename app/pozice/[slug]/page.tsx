@@ -5,6 +5,8 @@ import { PortableText } from '@portabletext/react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ContactDrawer from '@/components/ContactDrawer'
+import StructuredData from '@/components/StructuredData'
+import { buildMetadata, schemaBreadcrumb, schemaJobPosting, SITE_URL } from '@/lib/seo'
 
 export const revalidate = 30
 
@@ -16,10 +18,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const pozice = await getPoziceBySlug(params.slug)
   if (!pozice) return {}
-  return {
-    title: `${pozice.nazev} | Nice Job`,
+  return buildMetadata({
+    title:       `${pozice.nazev} — pracovní nabídka`,
     description: pozice.perex,
-  }
+    path:        `/pozice/${params.slug}`,
+  })
 }
 
 // Styly pro Portable Text (rich text popis)
@@ -65,6 +68,23 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
 
   return (
     <>
+    <StructuredData schema={[
+      schemaBreadcrumb([
+        { name: 'Nice Job',          url: SITE_URL },
+        { name: 'Pracovní nabídky',  url: `${SITE_URL}/pozice` },
+        { name: p.nazev,             url: `${SITE_URL}/pozice/${p.slug.current}` },
+      ]),
+      schemaJobPosting({
+        title:           p.nazev,
+        description:     p.perex,
+        datePosted:      p.zverejneno,
+        location:        p.lokalita,
+        salaryFrom:      p.mzdaOd,
+        salaryTo:        p.mzdaDo,
+        slug:            p.slug.current,
+        employmentTypes: typArr,
+      }),
+    ]} />
     <Navbar darkHero />
     <main className="min-h-screen bg-white">
 
