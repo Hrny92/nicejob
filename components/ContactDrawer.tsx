@@ -7,7 +7,7 @@ import { gsap } from 'gsap'
 const CONTACT = {
   name:     'Mgr. Zdeňka Kocandová',
   title:    'ředitelka společnosti',
-  phone:    '+420 737 277 272',
+  phone:    '+420 737 266 272',
   email:    'kocandova@mztraining.cz',
   linkedin: 'https://www.linkedin.com/in/zdenkakocandova/',
   web:      'https://mztraining.cz/',

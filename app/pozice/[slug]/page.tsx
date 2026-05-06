@@ -228,7 +228,7 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
               </p>
 
               <a
-                href={`mailto:info@nicejob.cz?subject=Zájem o pozici: ${encodeURIComponent(p.nazev)}`}
+                href={`mailto:kocandova@mztraining.cz?subject=Zájem o pozici: ${encodeURIComponent(p.nazev)}`}
                 className="block w-full text-center bg-brand-dark text-white
                            px-5 py-3.5 rounded-full text-sm font-semibold mb-3
                            hover:bg-brand-mid transition-all duration-300"

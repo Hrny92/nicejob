@@ -84,21 +84,21 @@ export default function Footer() {
               Kontakt
             </span>
             <a
-              href="mailto:info@nicejob.cz"
+              href="mailto:kocandova@mztraining.cz"
               style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem' }}
               className="hover:text-white transition-colors duration-200 w-fit"
             >
-              info@nicejob.cz
+              kocandova@mztraining.cz
             </a>
             <a
-              href="tel:+420123456789"
+              href="tel:+420737266272"
               style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem' }}
               className="hover:text-white transition-colors duration-200 w-fit"
             >
-              +420 123 456 789
+              +420 737 266 272
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/zdenkakocandova/"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem' }}

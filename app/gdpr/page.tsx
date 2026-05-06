@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Ochrana osobních údajů | Nice Job',
-  description: 'Informace o zpracování osobních údajů společností Nice Job s.r.o. dle GDPR.',
+  description: 'Informace o zpracování osobních údajů společností Nice Job dle GDPR.',
 }
 
 export default function GdprPage() {
@@ -55,8 +55,9 @@ export default function GdprPage() {
               1. Správce osobních údajů
             </h2>
             <p>
-              Správcem vašich osobních údajů je společnost <strong>Nice Job s.r.o.</strong>,
-              se sídlem Praha, Česká republika (dále jen „Správce").
+              Správcem vašich osobních údajů je <strong>Mgr. Zdeňka Kocandová</strong>,
+              ředitelka společnosti Nice Job, se sídlem Strančická 3339/43, 100 00 Praha 4
+              (dále jen „Správce"). IČ: 24192279, DIČ: CZ24192279.
               Správce zpracovává osobní údaje v souladu s Nařízením Evropského parlamentu a Rady (EU)
               2016/679 (GDPR) a zákonem č. 110/2019 Sb., o zpracování osobních údajů.
             </p>
@@ -136,8 +137,8 @@ export default function GdprPage() {
             </ul>
             <p className="mt-4">
               Svá práva uplatněte e-mailem na{' '}
-              <a href="mailto:info@nicejob.cz" className="text-brand-blue hover:underline font-medium" style={{ color: '#1E71C9' }}>
-                info@nicejob.cz
+              <a href="mailto:kocandova@mztraining.cz" className="font-medium hover:underline" style={{ color: '#1E71C9' }}>
+                kocandova@mztraining.cz
               </a>.
               Máte také právo podat stížnost u dozorového orgánu —{' '}
               <a href="https://www.uoou.cz" target="_blank" rel="noopener noreferrer"
@@ -164,14 +165,29 @@ export default function GdprPage() {
             <h2 style={{ fontFamily: 'Roboto, system-ui, sans-serif', fontWeight: 800, fontSize: '1.2rem', color: '#050e1d', marginBottom: 12 }}>
               7. Kontakt na správce
             </h2>
-            <p>
-              Nice Job s.r.o.<br />
-              Praha, Česká republika<br />
-              E-mail:{' '}
-              <a href="mailto:info@nicejob.cz" className="font-medium hover:underline" style={{ color: '#1E71C9' }}>
-                info@nicejob.cz
-              </a>
-            </p>
+            <div style={{ background: '#f8fafc', borderRadius: 12, padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <p><strong>Mgr. Zdeňka Kocandová</strong> — ředitelka společnosti</p>
+              <p>
+                E-mail:{' '}
+                <a href="mailto:kocandova@mztraining.cz" className="font-medium hover:underline" style={{ color: '#1E71C9' }}>
+                  kocandova@mztraining.cz
+                </a>
+              </p>
+              <p>
+                Tel.:{' '}
+                <a href="tel:+420737266272" className="font-medium hover:underline" style={{ color: '#1E71C9' }}>
+                  +420 737 266 272
+                </a>
+              </p>
+              <p style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #e2e8f0' }}>
+                Sídlo: Strančická 3339/43, 100 00 Praha 4<br />
+                Pobočka: K Písnici 611, 252 41 Dolní Břežany<br />
+                IČ: 24192279 &nbsp;·&nbsp; DIČ: CZ24192279<br />
+                Bankovní spojení: 2401021485/2010<br />
+                Datová schránka: hzm73z6<br />
+                Otevírací doba: dle dohody
+              </p>
+            </div>
           </section>
 
         </div>
