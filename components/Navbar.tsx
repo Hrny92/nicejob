@@ -14,7 +14,7 @@ const navLinks = [
   { label: 'Reference',          href: '/#reference'          },
 ]
 
-export default function Navbar() {
+export default function Navbar({ darkHero = false }: { darkHero?: boolean }) {
   const { open: openModal } = useContactModal()
   const navRef       = useRef<HTMLElement>(null)
   const logoRef      = useRef<HTMLDivElement>(null)
@@ -115,7 +115,13 @@ export default function Navbar() {
         {/* Logo — klik vždy na hlavní stránku */}
         <div ref={logoRef} className="flex-shrink-0">
           <Link href="/" aria-label="Zpět na hlavní stránku">
-            <Image src="/loga/logo-color.svg" alt="Nice Job" width={100} height={44} priority />
+            <Image
+              src={darkHero && !scrolled ? '/loga/logo-white.svg' : '/loga/logo-color.svg'}
+              alt="Nice Job"
+              width={100}
+              height={44}
+              priority
+            />
           </Link>
         </div>
 
@@ -125,12 +131,13 @@ export default function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="relative text-sm font-medium text-gray-700
-                           hover:text-brand-blue transition-colors duration-200 group"
+                className={`relative text-sm font-medium transition-colors duration-200 group
+                  ${scrolled ? 'text-gray-700 hover:text-brand-blue' : 'text-white/85 hover:text-white'}`}
               >
                 {link.label}
-                <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-brand-blue
-                                 transition-all duration-300 group-hover:w-full" />
+                <span className={`absolute -bottom-0.5 left-0 h-px w-0
+                                 transition-all duration-300 group-hover:w-full
+                                 ${scrolled ? 'bg-brand-blue' : 'bg-white'}`} />
               </Link>
             </li>
           ))}
@@ -140,10 +147,12 @@ export default function Navbar() {
         <div ref={ctaRef} className="hidden md:block ml-auto">
           <button
             onClick={openModal}
-            className="group inline-flex items-center gap-2
-                       bg-brand-dark text-white px-6 py-2.5 rounded-full
-                       text-sm font-semibold transition-all duration-300
-                       hover:bg-brand-mid hover:shadow-lg hover:shadow-brand-dark/25 hover:gap-3"
+            className={`group inline-flex items-center gap-2
+                       px-6 py-2.5 rounded-full
+                       text-sm font-semibold transition-all duration-300 hover:gap-3
+                       ${scrolled
+                         ? 'bg-brand-dark text-white hover:bg-brand-mid hover:shadow-lg hover:shadow-brand-dark/25'
+                         : 'bg-white/15 text-white border border-white/25 hover:bg-white/25'}`}
           >
             Napiš nám
             <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">→</span>

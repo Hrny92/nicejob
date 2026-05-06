@@ -65,17 +65,17 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
 
   return (
     <>
-    <Navbar />
+    <Navbar darkHero />
     <main className="min-h-screen bg-white">
 
       {/* Hero záhlaví */}
       <div
-        className="w-full px-8 lg:px-16 pt-36 pb-20"
+        className="w-full pt-36 pb-20"
         style={{
           background: 'linear-gradient(160deg, #050e1d 0%, #0B294A 60%, #050e1d 100%)',
         }}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto px-8 lg:px-16">
           <Link
             href="/pozice"
             className="inline-flex items-center gap-2 text-sm text-white/40
@@ -144,7 +144,7 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
       </div>
 
       {/* Tělo stránky */}
-      <div className="max-w-4xl mx-auto px-8 lg:px-16 py-16">
+      <div className="max-w-7xl mx-auto px-8 lg:px-16 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
           {/* Hlavní obsah */}

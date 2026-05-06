@@ -68,17 +68,17 @@ export default async function PozicePage() {
 
   return (
     <>
-    <Navbar />
+    <Navbar darkHero />
     <main className="min-h-screen bg-white">
 
       {/* Hero záhlaví */}
       <div
-        className="w-full px-8 lg:px-16 pt-36 pb-20"
+        className="w-full pt-36 pb-20"
         style={{
           background: 'linear-gradient(160deg, #050e1d 0%, #0B294A 60%, #050e1d 100%)',
         }}
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto px-8 lg:px-16">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-7 h-px bg-white/30" />
             <span className="text-xs font-semibold tracking-[0.22em] uppercase text-white/50">
