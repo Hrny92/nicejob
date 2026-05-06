@@ -100,6 +100,44 @@ const REFERENCES = [
   },
 ]
 
+const SLUZBY = [
+  {
+    nazev:   'Komplexní nábor na klíč',
+    popis:   'Od definice profilu přes aktivní vyhledávání až po podpis smlouvy. Celý náborový proces — přesně, rychle a s garancí kvality.',
+    detaily: ['Analýza potřeb a tvorba profilu', 'Multi-kanálové vyhledávání talentů', 'Strukturované pohovory a hodnocení', 'Podpora při nástupu a onboardingu'],
+    ikona:   'recruit',
+    poradi:  1,
+  },
+  {
+    nazev:   'HR audit & poradenství',
+    popis:   'Zmapujeme stav HR procesů, odhalíme slabá místa a nastavíme systém, který funguje. Data místo dojmů.',
+    detaily: ['Audit náborových a retenčních procesů', 'Analýza kultury a spokojenosti', 'Nastavení KPI a měřitelných cílů', 'Implementační plán s průběžnou podporou'],
+    ikona:   'audit',
+    poradi:  2,
+  },
+  {
+    nazev:   'Headhunting pro náročné',
+    popis:   'Hledáme lidi, kteří práci aktivně nehledají. Přímé oslovení top kandidátů na C-level, senior a specialistické pozice.',
+    detaily: ['Identifikace pasivních kandidátů', 'Přímé oslovení a relationship building', 'Diskrétní průběh pro obě strany', 'Záruka na nástup a zkušební dobu'],
+    ikona:   'hunt',
+    poradi:  3,
+  },
+  {
+    nazev:   'Budování firemní kultury',
+    popis:   'Pomáháme firmám vybudovat prostředí, kde lidé chtějí zůstat. Employer branding, hodnoty a způsob komunikace.',
+    detaily: ['Definice hodnot a kulturních principů', 'Employer branding strategie', 'Onboarding a retenční programy', 'Interní komunikace a engagement'],
+    ikona:   'culture',
+    poradi:  4,
+  },
+  {
+    nazev:   'Vzdělávání vašich týmů',
+    popis:   'Tréninky a workshopy na míru — leadership, komunikace, sales, HR dovednosti. Vzdělávání, které má měřitelný dopad.',
+    detaily: ['Leadership a management programy', 'Sales a komunikační tréninky', 'HR dovednosti pro line manažery', 'Měřitelné výstupy a follow-up coaching'],
+    ikona:   'learn',
+    poradi:  5,
+  },
+]
+
 const KLIENTI = [
   { nazev: 'NET4GAS',    poradi: 1 },
   { nazev: 'Vorwerk',    poradi: 2 },
@@ -125,6 +163,12 @@ async function seed() {
   for (const k of KLIENTI) {
     await client.create({ _type: 'klient', ...k })
     console.log(`   ✓  ${k.nazev}`)
+  }
+
+  console.log('🌱  Vkládám služby...')
+  for (const s of SLUZBY) {
+    await client.create({ _type: 'sluzba', ...s })
+    console.log(`   ✓  ${s.nazev}`)
   }
 
   console.log('✅  Hotovo!')

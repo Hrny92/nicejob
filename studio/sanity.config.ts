@@ -40,6 +40,14 @@ export default defineConfig({
                   .title('Klienti')
                   .defaultOrdering([{ field: 'poradi', direction: 'asc' }])
               ),
+            S.listItem()
+              .title('Služby')
+              .icon(() => '⚙️')
+              .child(
+                S.documentTypeList('sluzba')
+                  .title('Služby')
+                  .defaultOrdering([{ field: 'poradi', direction: 'asc' }])
+              ),
           ]),
     }),
     visionTool(),
