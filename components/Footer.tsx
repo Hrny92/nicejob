@@ -5,10 +5,11 @@ import Image from 'next/image'
 import { useContactModal } from '@/context/ContactModalContext'
 
 const NAV_LINKS = [
-  { label: 'O nás',     href: '#o-nas'     },
-  { label: 'Služby',    href: '#sluzby'    },
-  { label: 'Proč my',   href: '#proc-my'   },
-  { label: 'Reference', href: '#reference' },
+  { label: 'O nás',              href: '/#o-nas'            },
+  { label: 'Služby',             href: '/#sluzby'           },
+  { label: 'Proč my',            href: '/#proc-my'          },
+  { label: 'Pracovní nabídky',   href: '/pozice'            },
+  { label: 'Reference',          href: '/#reference'        },
 ]
 
 const LEGAL_LINKS = [

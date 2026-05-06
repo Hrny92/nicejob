@@ -7,11 +7,11 @@ import { gsap } from 'gsap'
 import { useContactModal } from '@/context/ContactModalContext'
 
 const navLinks = [
-  { label: 'O nás',              href: '#o-nas'              },
-  { label: 'Služby',             href: '#sluzby'             },
-  { label: 'Proč my',            href: '#proc-my'            },
-  { label: 'Pracovní nabídky',   href: '#pracovni-nabidky'   },
-  { label: 'Reference',          href: '#reference'          },
+  { label: 'O nás',              href: '/#o-nas'              },
+  { label: 'Služby',             href: '/#sluzby'             },
+  { label: 'Proč my',            href: '/#proc-my'            },
+  { label: 'Pracovní nabídky',   href: '/#pracovni-nabidky'   },
+  { label: 'Reference',          href: '/#reference'          },
 ]
 
 export default function Navbar() {
@@ -112,9 +112,11 @@ export default function Navbar() {
             : 'bg-transparent'}
         `}
       >
-        {/* Logo */}
+        {/* Logo — klik vždy na hlavní stránku */}
         <div ref={logoRef} className="flex-shrink-0">
-          <Image src="/loga/logo-color.svg" alt="Nice Job" width={100} height={44} priority />
+          <Link href="/" aria-label="Zpět na hlavní stránku">
+            <Image src="/loga/logo-color.svg" alt="Nice Job" width={100} height={44} priority />
+          </Link>
         </div>
 
         {/* Desktop links — přesně na středu viewportu */}

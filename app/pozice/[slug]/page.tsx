@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPoziceBySlug, getAllPoziceSlugs, TYP_UVAZKU, formatMzda } from '@/lib/queries'
 import { PortableText } from '@portabletext/react'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import ContactDrawer from '@/components/ContactDrawer'
 
 export const revalidate = 30
 
@@ -61,6 +64,8 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
   const typLabels = typArr.map((t) => TYP_UVAZKU[t] ?? t).join(', ')
 
   return (
+    <>
+    <Navbar />
     <main className="min-h-screen bg-white">
 
       {/* Hero záhlaví */}
@@ -271,5 +276,8 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
         </div>
       </div>
     </main>
+    <Footer />
+    <ContactDrawer />
+    </>
   )
 }

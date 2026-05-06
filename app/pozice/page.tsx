@@ -1,5 +1,8 @@
 import Link from 'next/link'
 import { getAllPozice, TYP_UVAZKU, formatMzda, PozicePreview } from '@/lib/queries'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import ContactDrawer from '@/components/ContactDrawer'
 
 export const revalidate = 30
 
@@ -64,6 +67,8 @@ export default async function PozicePage() {
   const pozice = await getAllPozice()
 
   return (
+    <>
+    <Navbar />
     <main className="min-h-screen bg-white">
 
       {/* Hero záhlaví */}
@@ -159,5 +164,8 @@ export default async function PozicePage() {
         )}
       </div>
     </main>
+    <Footer />
+    <ContactDrawer />
+    </>
   )
 }
