@@ -128,7 +128,7 @@ export default function Footer() {
                         gap-4 py-6 text-[0.78rem]"
           style={{ color: 'rgba(255,255,255,0.22)' }}>
 
-          <span>© {year} Nice Job s.r.o. Všechna práva vyhrazena.</span>
+          <span>© {year} MZ Training s.r.o. Všechna práva vyhrazena.</span>
 
           <div className="flex items-center gap-6">
             {LEGAL_LINKS.map(({ label, href }) => (

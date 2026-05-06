@@ -55,8 +55,8 @@ export default function GdprPage() {
               1. Správce osobních údajů
             </h2>
             <p>
-              Správcem vašich osobních údajů je <strong>Mgr. Zdeňka Kocandová</strong>,
-              ředitelka společnosti Nice Job, se sídlem Strančická 3339/43, 100 00 Praha 4
+              Správcem vašich osobních údajů je společnost <strong>MZ Training s.r.o.</strong>,
+              provozující značku Nice Job, se sídlem Strančická 3339/43, 100 00 Praha 4
               (dále jen „Správce"). IČ: 24192279, DIČ: CZ24192279.
               Správce zpracovává osobní údaje v souladu s Nařízením Evropského parlamentu a Rady (EU)
               2016/679 (GDPR) a zákonem č. 110/2019 Sb., o zpracování osobních údajů.
@@ -166,7 +166,8 @@ export default function GdprPage() {
               7. Kontakt na správce
             </h2>
             <div style={{ background: '#f8fafc', borderRadius: 12, padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <p><strong>Mgr. Zdeňka Kocandová</strong> — ředitelka společnosti</p>
+              <p><strong>MZ Training s.r.o.</strong> — značka Nice Job</p>
+              <p>Mgr. Zdeňka Kocandová, ředitelka</p>
               <p>
                 E-mail:{' '}
                 <a href="mailto:kocandova@mztraining.cz" className="font-medium hover:underline" style={{ color: '#1E71C9' }}>
