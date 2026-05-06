@@ -1,33 +1,32 @@
 'use client'
 
 import { useContactModal } from '@/context/ContactModalContext'
+import type { ProcMyData } from '@/lib/queries'
 
-const STATS = [
-  { value: '200+', label: 'Obsazených pozic', sub: 'od vzniku agentury' },
-  { value: '98%',  label: 'Spokojenost klientů', sub: 'dle interního průzkumu' },
-  { value: '14 dní', label: 'Průměrná doba', sub: 'obsazení role' },
-]
+const FALLBACK: ProcMyData = {
+  nadpis1:   'Nejsme jen agentura.',
+  nadpis2:   'Jsme váš partner.',
+  podnadpis: 'Sázíme na data, intuici a moderní technologie.',
+  statistiky: [
+    { _key: 's1', hodnota: '200+',   popis: 'Obsazených pozic',    podpis: 'od vzniku agentury' },
+    { _key: 's2', hodnota: '98%',    popis: 'Spokojenost klientů', podpis: 'dle interního průzkumu' },
+    { _key: 's3', hodnota: '14 dní', popis: 'Průměrná doba',       podpis: 'obsazení role' },
+  ],
+  pilire: [
+    { _key: 'p1', nadpis: 'Rychlost',         popis: 'Pohybujeme se rychle. Bez zbytečné byrokracie. Obsadíme roli dříve, než ji obsadí konkurence.' },
+    { _key: 'p2', nadpis: 'Transparentnost',   popis: 'Vždy víte, kde stojíme. Pravidelný reporting, otevřená komunikace, žádné skryté poplatky.' },
+    { _key: 'p3', nadpis: 'Lidskost',          popis: 'Za každou pozicí vidíme skutečného člověka. Kandidáti i klienti jsou pro nás partneři, ne čísla.' },
+  ],
+}
 
-const PILLARS = [
-  {
-    num: '01',
-    title: 'Rychlost',
-    desc: 'Pohybujeme se rychle. Bez zbytečné byrokracie. Obsadíme roli dříve, než ji obsadí konkurence.',
-  },
-  {
-    num: '02',
-    title: 'Transparentnost',
-    desc: 'Vždy víte, kde stojíme. Pravidelný reporting, otevřená komunikace, žádné skryté poplatky.',
-  },
-  {
-    num: '03',
-    title: 'Lidskost',
-    desc: 'Za každou pozicí vidíme skutečného člověka. Kandidáti i klienti jsou pro nás partneři, ne čísla.',
-  },
-]
+const pad = (n: number) => n < 10 ? `0${n}` : String(n)
 
-export default function WhyUsSection() {
+export default function WhyUsSection({ data }: { data?: ProcMyData | null }) {
   const { open: openModal } = useContactModal()
+  const d = data ?? FALLBACK
+  const stats  = d.statistiky ?? FALLBACK.statistiky ?? []
+  const pilire = d.pilire     ?? FALLBACK.pilire     ?? []
+
   return (
     <section
       id="proc-my"
@@ -68,7 +67,7 @@ export default function WhyUsSection() {
             lineHeight: 1.1,
             marginBottom: 8,
           }}>
-            Nejsme jen agentura.
+            {d.nadpis1}
           </h2>
           <p style={{
             fontFamily: 'Georgia, serif',
@@ -79,17 +78,19 @@ export default function WhyUsSection() {
             lineHeight: 1.2,
             marginBottom: 20,
           }}>
-            Jsme váš partner.
+            {d.nadpis2}
           </p>
-          <p style={{ color: '#64748b', fontSize: '1rem', maxWidth: 480 }}>
-            Sázíme na data, intuici a moderní technologie.
-          </p>
+          {d.podnadpis && (
+            <p style={{ color: '#64748b', fontSize: '1rem', maxWidth: 480 }}>
+              {d.podnadpis}
+            </p>
+          )}
         </div>
 
         {/* ── Statistiky ────────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 mb-20 md:mb-24">
-          {STATS.map(({ value, label, sub }, i) => (
-            <div key={i} className="flex flex-col items-center md:items-start text-center md:text-left
+          {stats.map(({ _key, hodnota, popis, podpis }) => (
+            <div key={_key} className="flex flex-col items-center md:items-start text-center md:text-left
               md:border-r md:last:border-r-0 md:px-10 first:md:pl-0"
               style={{ borderColor: 'rgba(30,113,201,0.12)' }}>
               <span style={{
@@ -100,21 +101,21 @@ export default function WhyUsSection() {
                 lineHeight: 1,
                 letterSpacing: '-0.02em',
               }}>
-                {value}
+                {hodnota}
               </span>
               <span style={{ color: '#0B294A', fontWeight: 700, fontSize: '0.95rem', marginTop: 8, marginBottom: 4 }}>
-                {label}
+                {popis}
               </span>
-              <span style={{ color: '#94a3b8', fontSize: '0.8rem' }}>{sub}</span>
+              {podpis && <span style={{ color: '#94a3b8', fontSize: '0.8rem' }}>{podpis}</span>}
             </div>
           ))}
         </div>
 
         {/* ── Pilíře ───────────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {PILLARS.map(({ num, title, desc }, i) => (
+          {pilire.map(({ _key, nadpis, popis }, i) => (
             <div
-              key={i}
+              key={_key}
               className="group relative rounded-2xl p-7 transition-all duration-300"
               style={{
                 background: '#f8fafc',
@@ -126,7 +127,7 @@ export default function WhyUsSection() {
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 style={{ background: 'linear-gradient(135deg, rgba(30,113,201,0.04) 0%, transparent 60%)' }} />
 
-              {/* Číslo */}
+              {/* Číslo — automaticky z pořadí */}
               <span style={{
                 display: 'block',
                 fontSize: '0.72rem',
@@ -136,7 +137,7 @@ export default function WhyUsSection() {
                 marginBottom: 18,
                 textTransform: 'uppercase',
               }}>
-                {num}
+                {pad(i + 1)}
               </span>
 
               {/* Název */}
@@ -147,12 +148,12 @@ export default function WhyUsSection() {
                 color: '#050e1d',
                 marginBottom: 12,
               }}>
-                {title}
+                {nadpis}
               </h3>
 
               {/* Popis */}
               <p style={{ color: '#64748b', fontSize: '0.9rem', lineHeight: 1.75 }}>
-                {desc}
+                {popis}
               </p>
 
               {/* Spodní modrá linka při hover */}

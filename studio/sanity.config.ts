@@ -16,6 +16,27 @@ export default defineConfig({
         S.list()
           .title('Nice Job CMS')
           .items([
+            // ── Stránky (singletony) ────────────────────────────
+            S.listItem()
+              .title('O nás')
+              .icon(() => '👤')
+              .child(
+                S.document()
+                  .schemaType('oNas')
+                  .documentId('singleton-oNas')
+                  .title('O nás')
+              ),
+            S.listItem()
+              .title('Proč my')
+              .icon(() => '🏆')
+              .child(
+                S.document()
+                  .schemaType('procMy')
+                  .documentId('singleton-procMy')
+                  .title('Proč my')
+              ),
+            S.divider(),
+            // ── Kolekce ─────────────────────────────────────────
             S.listItem()
               .title('Pracovní pozice')
               .icon(() => '💼')
@@ -23,6 +44,14 @@ export default defineConfig({
                 S.documentTypeList('pozice')
                   .title('Pracovní pozice')
                   .defaultOrdering([{ field: 'zverejneno', direction: 'desc' }])
+              ),
+            S.listItem()
+              .title('Služby')
+              .icon(() => '⚙️')
+              .child(
+                S.documentTypeList('sluzba')
+                  .title('Služby')
+                  .defaultOrdering([{ field: 'poradi', direction: 'asc' }])
               ),
             S.listItem()
               .title('Reference')
@@ -38,14 +67,6 @@ export default defineConfig({
               .child(
                 S.documentTypeList('klient')
                   .title('Klienti')
-                  .defaultOrdering([{ field: 'poradi', direction: 'asc' }])
-              ),
-            S.listItem()
-              .title('Služby')
-              .icon(() => '⚙️')
-              .child(
-                S.documentTypeList('sluzba')
-                  .title('Služby')
                   .defaultOrdering([{ field: 'poradi', direction: 'asc' }])
               ),
           ]),

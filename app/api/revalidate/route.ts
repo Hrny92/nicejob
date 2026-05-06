@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       revalidatePath('/', 'page')
       revalidatePath('/pozice', 'page')
       revalidatePath('/pozice/[slug]', 'page')
-    } else if (type === 'recenze' || type === 'klient' || type === 'sluzba') {
+    } else if (type === 'recenze' || type === 'klient' || type === 'sluzba' || type === 'oNas' || type === 'procMy') {
       revalidatePath('/', 'page')
     } else {
       // Fallback — přegeneruj vše

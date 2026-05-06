@@ -148,3 +148,53 @@ export async function getSluzby(): Promise<SluzbaItem[]> {
     }`
   )
 }
+
+// ── O nás ────────────────────────────────────────────────────────────────
+
+export type ONasData = {
+  nadpis1: string
+  nadpis2: string
+  perex?: string
+  perexTucne?: string
+  perexPo?: string
+  checklistPolozky?: string[]
+}
+
+export async function getONas(): Promise<ONasData | null> {
+  return client.fetch(
+    `*[_type == "oNas" && _id == "singleton-oNas"][0] {
+      nadpis1, nadpis2, perex, perexTucne, perexPo, checklistPolozky
+    }`
+  )
+}
+
+// ── Proč my ──────────────────────────────────────────────────────────────
+
+export type StatItem = {
+  _key: string
+  hodnota: string
+  popis: string
+  podpis?: string
+}
+
+export type PilarItem = {
+  _key: string
+  nadpis: string
+  popis: string
+}
+
+export type ProcMyData = {
+  nadpis1: string
+  nadpis2: string
+  podnadpis?: string
+  statistiky?: StatItem[]
+  pilire?: PilarItem[]
+}
+
+export async function getProcMy(): Promise<ProcMyData | null> {
+  return client.fetch(
+    `*[_type == "procMy" && _id == "singleton-procMy"][0] {
+      nadpis1, nadpis2, podnadpis, statistiky, pilire
+    }`
+  )
+}

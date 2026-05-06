@@ -5,16 +5,27 @@ import { useRef, useEffect, useState, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { useContactModal } from '@/context/ContactModalContext'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import type { ONasData } from '@/lib/queries'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const CHECK_ITEMS = [
-  'Lidský přístup ke každé zakázce',
-  'Propojení dat, intuice a moderních nástrojů',
-  'Rychlost a transparentnost bez kompromisů',
-]
+// Fallbacková data pro případ, že Sanity ještě nemá obsah
+const FALLBACK: ONasData = {
+  nadpis1: 'Vznikli jsme z potřeby',
+  nadpis2: 'dělat věci jinak.',
+  perex: 'Spojujeme roky zkušeností s dravostí nové značky zaměřené čistě na lidi.',
+  perexTucne: 'Nice Job není jen název, je to náš standard.',
+  perexPo: 'Pomáháme firmám růst skrze ty správné lidi a nastavujeme novou laťku v HR praxi.',
+  checklistPolozky: [
+    'Lidský přístup ke každé zakázce',
+    'Propojení dat, intuice a moderních nástrojů',
+    'Rychlost a transparentnost bez kompromisů',
+  ],
+}
 
-export default function AboutSection() {
+export default function AboutSection({ data }: { data?: ONasData | null }) {
+  const d = data ?? FALLBACK
+  const checkItems = d.checklistPolozky ?? FALLBACK.checklistPolozky ?? []
   const { open: openModal } = useContactModal()
   const sectionRef = useRef<HTMLElement>(null)
   const labelRef   = useRef<HTMLDivElement>(null)
@@ -179,7 +190,7 @@ export default function AboutSection() {
                 color: '#050e1d',
                 marginBottom: 6,
               }}>
-              Vznikli jsme z potřeby
+              {d.nadpis1}
             </span>
             <span className="h-line block"
               style={{
@@ -189,22 +200,22 @@ export default function AboutSection() {
                 fontSize: 'clamp(1.9rem, 3.8vw, 3rem)',
                 color: '#1E71C9',
               }}>
-              dělat věci jinak.
+              {d.nadpis2}
             </span>
           </h2>
 
           {/* Tělo */}
           <p ref={bodyRef} className="text-gray-500 leading-relaxed text-[0.95rem] max-w-md">
-            Spojujeme roky zkušeností s dravostí nové značky zaměřené čistě na lidi.{' '}
-            <strong className="text-gray-800 font-semibold">
-              Nice Job není jen název, je to náš standard.
-            </strong>{' '}
-            Pomáháme firmám růst skrze ty správné lidi a nastavujeme novou laťku v HR praxi.
+            {d.perex}{d.perex && d.perexTucne ? ' ' : ''}
+            {d.perexTucne && (
+              <strong className="text-gray-800 font-semibold">{d.perexTucne}</strong>
+            )}
+            {d.perexPo ? ` ${d.perexPo}` : ''}
           </p>
 
           {/* Checklist */}
           <ul ref={listRef} className="flex flex-col gap-3.5 mb-8">
-            {CHECK_ITEMS.map((item) => (
+            {checkItems.map((item) => (
               <li key={item} className="flex items-center gap-3 text-gray-700 text-sm font-medium">
                 {/* Zaškrtnutí */}
                 <span
