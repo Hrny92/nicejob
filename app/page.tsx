@@ -8,15 +8,16 @@ import JobsSection        from '@/components/JobsSection'
 import Footer             from '@/components/Footer'
 import ContactDrawer      from '@/components/ContactDrawer'
 import CookieBanner       from '@/components/CookieBanner'
-import { getLatestPozice, getReference, getKlienti } from '@/lib/queries'
+import { getLatestPozice, getReference, getKlienti, getSluzby } from '@/lib/queries'
 
 export const revalidate = 30
 
 export default async function Home() {
-  const [pozice, reference, klienti] = await Promise.all([
+  const [pozice, reference, klienti, sluzby] = await Promise.all([
     getLatestPozice(),
     getReference(),
     getKlienti(),
+    getSluzby(),
   ])
 
   return (
@@ -24,7 +25,7 @@ export default async function Home() {
       <Navbar />
       <HeroSection />
       <AboutSection />
-      <ServicesSection />
+      <ServicesSection sluzby={sluzby} />
       <WhyUsSection />
       <JobsSection pozice={pozice} />
       <ReferencesSection reference={reference} klienti={klienti} />
