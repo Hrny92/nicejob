@@ -269,7 +269,7 @@ export default function AboutSection({ data }: { data?: ONasData | null }) {
             >
               {/* Spodní vrstva — červené postavičky (vždy viditelné) */}
               <Image
-                src="/onas-photo-red2.png"
+                src="/onas-photo-red2.jpg"
                 alt="Tým Nice Job"
                 fill
                 className="object-cover"
