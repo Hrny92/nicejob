@@ -132,12 +132,12 @@ export default function Navbar({ darkHero = false }: { darkHero?: boolean }) {
               <Link
                 href={link.href}
                 className={`relative text-sm font-medium transition-colors duration-200 group
-                  ${scrolled ? 'text-gray-700 hover:text-brand-blue' : 'text-white/85 hover:text-white'}`}
+                  ${scrolled || !darkHero ? 'text-gray-700 hover:text-brand-blue' : 'text-white/85 hover:text-white'}`}
               >
                 {link.label}
                 <span className={`absolute -bottom-0.5 left-0 h-px w-0
                                  transition-all duration-300 group-hover:w-full
-                                 ${scrolled ? 'bg-brand-blue' : 'bg-white'}`} />
+                                 ${scrolled || !darkHero ? 'bg-brand-blue' : 'bg-white'}`} />
               </Link>
             </li>
           ))}
@@ -150,7 +150,7 @@ export default function Navbar({ darkHero = false }: { darkHero?: boolean }) {
             className={`group inline-flex items-center gap-2
                        px-6 py-2.5 rounded-full
                        text-sm font-semibold transition-all duration-300 hover:gap-3
-                       ${scrolled
+                       ${scrolled || !darkHero
                          ? 'bg-brand-dark text-white hover:bg-brand-mid hover:shadow-lg hover:shadow-brand-dark/25'
                          : 'bg-white/15 text-white border border-white/25 hover:bg-white/25'}`}
           >
@@ -164,7 +164,7 @@ export default function Navbar({ darkHero = false }: { darkHero?: boolean }) {
           className={`
             md:hidden relative z-50 flex flex-col justify-center items-center
             w-9 h-9 gap-[5px] transition-colors duration-300
-            ${scrolled || menuOpen ? 'text-brand-dark' : 'text-white'}
+            ${scrolled || menuOpen || !darkHero ? 'text-brand-dark' : 'text-white'}
           `}
           onClick={() => (menuOpen ? closeMenu() : setMenuOpen(true))}
           aria-label={menuOpen ? 'Zavřít menu' : 'Otevřít menu'}
