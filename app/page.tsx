@@ -10,7 +10,7 @@ import JobsSection        from '@/components/JobsSection'
 import Footer             from '@/components/Footer'
 import ContactDrawer      from '@/components/ContactDrawer'
 import CookieBanner       from '@/components/CookieBanner'
-import { getLatestPozice, getReference, getKlienti, getSluzby, getONas, getProcMy } from '@/lib/queries'
+import { getLatestPozice, getReference, getKlienti, getSluzby, getONas, getProcMy, getHrPoradenstvi } from '@/lib/queries'
 import { buildMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = buildMetadata({
@@ -22,13 +22,14 @@ export const metadata: Metadata = buildMetadata({
 export const revalidate = 30
 
 export default async function Home() {
-  const [pozice, reference, klienti, sluzby, oNas, procMy] = await Promise.all([
+  const [pozice, reference, klienti, sluzby, oNas, procMy, hrPoradenstvi] = await Promise.all([
     getLatestPozice(),
     getReference(),
     getKlienti(),
     getSluzby(),
     getONas(),
     getProcMy(),
+    getHrPoradenstvi(),
   ])
 
   return (
@@ -37,7 +38,7 @@ export default async function Home() {
       <HeroSection />
       <AboutSection data={oNas} />
       <ServicesSection sluzby={sluzby} />
-      <ServicesAccordion podsluzby={sluzby.find(s => s.podsluzby?.length)?.podsluzby} />
+      <ServicesAccordion podsluzby={hrPoradenstvi?.polozky} />
       <WhyUsSection data={procMy} />
       <JobsSection pozice={pozice} />
       <ReferencesSection reference={reference} klienti={klienti} />

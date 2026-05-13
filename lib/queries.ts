@@ -146,15 +146,27 @@ export type SluzbaItem = {
   ikona: string
   poradi: number
   fotoUrl?: string | null
-  podsluzby?: PodsluzbaItem[]
 }
 
 export async function getSluzby(): Promise<SluzbaItem[]> {
   return client.fetch(
     `*[_type == "sluzba"] | order(poradi asc) {
       _id, nazev, popis, detaily, ikona, poradi,
-      "fotoUrl": foto.asset->url,
-      podsluzby[]{ _key, nazev, popis }
+      "fotoUrl": foto.asset->url
+    }`
+  )
+}
+
+// ── HR poradenství — samostatný přehled položek ──────────────────────────
+
+export type HrPoradenstviData = {
+  polozky?: PodsluzbaItem[]
+}
+
+export async function getHrPoradenstvi(): Promise<HrPoradenstviData | null> {
+  return client.fetch(
+    `*[_type == "hrPoradenstvi"][0] {
+      polozky[]{ _key, nazev, popis }
     }`
   )
 }
