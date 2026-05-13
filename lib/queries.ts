@@ -165,7 +165,7 @@ export type HrPoradenstviData = {
 
 export async function getHrPoradenstvi(): Promise<HrPoradenstviData | null> {
   return client.fetch(
-    `*[_type == "hrPoradenstvi"][0] {
+    `*[_type == "hrPoradenstvi" && _id == "singleton-hrPoradenstvi"][0] {
       polozky[]{ _key, nazev, popis }
     }`
   )

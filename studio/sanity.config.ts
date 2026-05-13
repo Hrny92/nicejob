@@ -35,6 +35,15 @@ export default defineConfig({
                   .documentId('singleton-procMy')
                   .title('Proč my')
               ),
+            S.listItem()
+              .title('HR poradenství — přehled')
+              .icon(() => '📋')
+              .child(
+                S.document()
+                  .schemaType('hrPoradenstvi')
+                  .documentId('singleton-hrPoradenstvi')
+                  .title('HR poradenství — přehled')
+              ),
             S.divider(),
             // ── Kolekce ─────────────────────────────────────────
             S.listItem()
