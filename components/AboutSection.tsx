@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { useContactModal } from '@/context/ContactModalContext'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -35,40 +35,6 @@ export default function AboutSection({ data }: { data?: ONasData | null }) {
   const imageRef   = useRef<HTMLDivElement>(null)
   const cardRef    = useRef<HTMLDivElement>(null)
 
-  const [imgError, setImgError] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
-  const photoContainerRef = useRef<HTMLDivElement>(null)
-  const greenLayerRef     = useRef<HTMLDivElement>(null)
-  const crosshairRef      = useRef<HTMLDivElement>(null)
-
-  // Inicializujeme masku mimo JSX — React ji pak nikdy nepřepisuje
-  useEffect(() => {
-    if (greenLayerRef.current) {
-      const init = 'radial-gradient(circle at -999px -999px, black 65px, transparent 65px)'
-      greenLayerRef.current.style.maskImage = init
-      greenLayerRef.current.style.webkitMaskImage = init
-    }
-  }, [])
-
-  // Aktualizujeme DOM přímo — žádný setState = žádné re-rendery = plynulý pohyb
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = photoContainerRef.current?.getBoundingClientRect()
-    if (!rect) return
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-
-    // Maska: černá (viditelná) uprostřed, průhledná vně
-    if (greenLayerRef.current) {
-      const g = `radial-gradient(circle at ${x}px ${y}px, black 65px, transparent 65px)`
-      greenLayerRef.current.style.maskImage = g
-      greenLayerRef.current.style.webkitMaskImage = g
-    }
-
-    // Zaměřovač sleduje kurzor — centrovaný na pozici myši (150px → offset 75)
-    if (crosshairRef.current) {
-      crosshairRef.current.style.transform = `translate(${x - 75}px, ${y - 75}px)`
-    }
-  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -255,70 +221,15 @@ export default function AboutSection({ data }: { data?: ONasData | null }) {
             style={{ aspectRatio: '3 / 4' }}
           >
             {/* Dekorativní rámeček za fotkou */}
-            <div
-              className="absolute -bottom-4 -right-4 w-full h-full rounded-3xl border-2 border-brand-blue/15 -z-10"
+            <div className="absolute -bottom-4 -right-4 w-full h-full rounded-3xl border-2 border-brand-blue/15 -z-10" />
+
+            <Image
+              src="/Kocandova.png"
+              alt="Mgr. Zdeňka Kocandová — Nice Job"
+              fill
+              className="object-cover object-top"
+              priority
             />
-
-            {/* Interaktivní dvouvrstvý obrázek */}
-            <div
-              ref={photoContainerRef}
-              className="absolute inset-0 cursor-none-force"
-              onMouseMove={handleMouseMove}
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-            >
-              {/* Spodní vrstva — červené postavičky (vždy viditelné) */}
-              <Image
-                src="/onas-photo-red2.jpg"
-                alt="Tým Nice Job"
-                fill
-                className="object-cover"
-              />
-
-              {/* Horní vrstva — zelené postavičky, maska aktualizovaná přímo přes ref */}
-              <div
-                ref={greenLayerRef}
-                className="absolute inset-0"
-                style={{
-                  opacity: isHovering ? 1 : 0,
-                  transition: 'opacity 0.25s ease',
-                  // maskImage záměrně NENÍ tady — React by ji přepsal při re-renderu
-                  // Nastavujeme ji čistě imperativně v handleMouseMove
-                }}
-              >
-                <Image
-                  src="/onas-photo-green2.png"
-                  alt="Tým Nice Job — zelené postavičky"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Viditelný zaměřovač sledující kurzor */}
-              <div
-                ref={crosshairRef}
-                className="absolute top-0 left-0 pointer-events-none"
-                style={{
-                  width: 150,
-                  height: 150,
-                  opacity: isHovering ? 1 : 0,
-                  transition: 'opacity 0.25s ease',
-                  zIndex: 4,
-                }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/loga/zamerovac.svg"
-                  alt=""
-                  width={150}
-                  height={150}
-                  style={{ display: 'block' }}
-                />
-              </div>
-            </div>
-
-            {/* Kartička overlay */}
-            
           </div>
         </div>
 

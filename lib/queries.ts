@@ -132,6 +132,12 @@ export async function getKlienti(): Promise<KlientItem[]> {
 
 // ── Služby ───────────────────────────────────────────────────────────────
 
+export type PodsluzbaItem = {
+  _key: string
+  nazev: string
+  popis: string
+}
+
 export type SluzbaItem = {
   _id: string
   nazev: string
@@ -139,12 +145,16 @@ export type SluzbaItem = {
   detaily?: string[]
   ikona: string
   poradi: number
+  fotoUrl?: string | null
+  podsluzby?: PodsluzbaItem[]
 }
 
 export async function getSluzby(): Promise<SluzbaItem[]> {
   return client.fetch(
     `*[_type == "sluzba"] | order(poradi asc) {
-      _id, nazev, popis, detaily, ikona, poradi
+      _id, nazev, popis, detaily, ikona, poradi,
+      "fotoUrl": foto.asset->url,
+      podsluzby[]{ _key, nazev, popis }
     }`
   )
 }

@@ -3,6 +3,7 @@ import Navbar             from '@/components/Navbar'
 import HeroSection        from '@/components/HeroSection'
 import AboutSection       from '@/components/AboutSection'
 import ServicesSection    from '@/components/ServicesSection'
+import ServicesAccordion  from '@/components/ServicesAccordion'
 import WhyUsSection       from '@/components/WhyUsSection'
 import ReferencesSection  from '@/components/ReferencesSection'
 import JobsSection        from '@/components/JobsSection'
@@ -32,10 +33,11 @@ export default async function Home() {
 
   return (
     <main>
-      <Navbar />
+      <Navbar darkHero />
       <HeroSection />
       <AboutSection data={oNas} />
       <ServicesSection sluzby={sluzby} />
+      <ServicesAccordion podsluzby={sluzby.find(s => s.podsluzby?.length)?.podsluzby} />
       <WhyUsSection data={procMy} />
       <JobsSection pozice={pozice} />
       <ReferencesSection reference={reference} klienti={klienti} />

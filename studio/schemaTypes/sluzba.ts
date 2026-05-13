@@ -47,10 +47,33 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'podsluzby',
+      title: 'Podslužby / detailní přehled',
+      type: 'array',
+      description: 'Nepovinné. Zobrazí se jako slider pod sekcí služeb (typicky u HR poradenství).',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'nazev', title: 'Název', type: 'string', validation: (Rule) => Rule.required() }),
+            defineField({ name: 'popis', title: 'Popis', type: 'text', rows: 2 }),
+          ],
+          preview: { select: { title: 'nazev' } },
+        },
+      ],
+    }),
+    defineField({
+      name: 'foto',
+      title: 'Fotografie / vizuál služby',
+      type: 'image',
+      description: 'Zobrazí se na stěně 3D kostky. Doporučený formát: čtvercový, min. 800×800 px.',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'poradi',
       title: 'Pořadí',
       type: 'number',
-      description: 'Nižší číslo = zobrazí se dříve. Minimum 2, maximum dle potřeby.',
+      description: 'Nižší číslo = zobrazí se dříve. Minimum 1, maximum dle potřeby.',
       initialValue: 99,
       validation: (Rule) => Rule.required().min(1),
     }),
