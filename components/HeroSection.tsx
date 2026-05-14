@@ -41,8 +41,7 @@ export default function HeroSection() {
   // ── Před prvním vyrenderováním skryj veškerý obsah a pozadí ──────────────
   // useLayoutEffect = synchronně před tím než prohlížeč vykreslí
   useLayoutEffect(() => {
-    if (contentRef.current) gsap.set(contentRef.current, { opacity: 0 })
-    if (bgRef.current)      gsap.set(bgRef.current, { scale: 1.07, opacity: 0 })
+    if (bgRef.current) gsap.set(bgRef.current, { scale: 1.07, opacity: 0 })
   }, [])
 
   // ── Spusť animaci až po načtení obrázku ──────────────────────────────────
