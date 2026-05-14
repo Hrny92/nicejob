@@ -12,7 +12,7 @@ const LOCAL_FALLBACKS = ['/nabor.jpg', '/headhunting.jpg', '/skoleni.jpg']
 
 // Stejná logika jako getCubeX — sudý index → karta vpravo, lichý → vlevo
 // Hodnota v px (vypočítá se při init podle šířky viewportu)
-const getOffsetX = (i: number, vw: number) => (i % 2 === 0 ? 1 : -1) * vw * 0.22
+const getOffsetX = (i: number, vw: number) => vw < 768 ? 0 : (i % 2 === 0 ? 1 : -1) * vw * 0.22
 
 export default function ServicesSection({ sluzby = [] }: { sluzby?: SluzbaItem[] }) {
   const sectionRef  = useRef<HTMLElement>(null)
@@ -136,8 +136,8 @@ export default function ServicesSection({ sluzby = [] }: { sluzby?: SluzbaItem[]
           <div
             ref={cardRef}
             style={{
-              width:           'min(380px, 38vw)',
-              height:          'min(380px, 38vw)',
+              width:           'clamp(240px, 65vw, 380px)',
+              height:          'clamp(240px, 65vw, 380px)',
               transformStyle:  'preserve-3d',
               willChange:      'transform',
             }}
@@ -216,73 +216,60 @@ export default function ServicesSection({ sluzby = [] }: { sluzby?: SluzbaItem[]
               className="absolute left-0 right-0"
               style={{ top: `${i * 100}vh`, height: '100vh' }}
             >
+              {/* ── Mobile: text dole uprostřed ── */}
               <div
-                className="pointer-events-auto"
+                className="md:hidden pointer-events-auto"
+                style={{
+                  position: 'absolute',
+                  bottom: '6rem',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '88%',
+                  textAlign: 'center',
+                  opacity: isActive ? 1 : 0,
+                  transition: 'opacity 0.65s cubic-bezier(0.16,1,0.3,1)',
+                }}
+              >
+                <span className="font-mono text-xs mb-3 block" style={{ color: '#5ba3f5', opacity: 0.7 }}>{pad(i + 1)}</span>
+                <h2 className="font-black leading-tight mb-3" style={{ fontFamily: 'Roboto, system-ui, sans-serif', fontSize: 'clamp(1.4rem, 6vw, 2rem)', color: '#ffffff' }}>
+                  {s.nazev}
+                </h2>
+                <p className="leading-relaxed" style={{ fontSize: '0.88rem', color: 'rgba(255,255,255,0.55)' }}>
+                  {s.popis}
+                </p>
+              </div>
+
+              {/* ── Desktop: text vlevo / vpravo ── */}
+              <div
+                className="hidden md:block pointer-events-auto"
                 style={{
                   position:  'absolute',
                   top:       '50%',
                   transform: 'translateY(-50%)',
                   ...(isLeft
-                    ? { left:  'max(2rem, calc((100vw - 80rem) / 2 + 2.5rem))', maxWidth: '34vw', minWidth: '220px' }
+                    ? { left: 'max(2rem, calc((100vw - 80rem) / 2 + 2.5rem))', maxWidth: '34vw', minWidth: '220px' }
                     : { right: 'max(2rem, calc((100vw - 80rem) / 2 + 2.5rem))', maxWidth: '34vw', minWidth: '220px', textAlign: 'right' as const }),
                   opacity:    isActive ? 1 : 0.18,
                   transition: 'opacity 0.65s cubic-bezier(0.16,1,0.3,1)',
                 }}
               >
                 <div className={`flex items-center gap-3 mb-5 ${!isLeft ? 'justify-end' : ''}`}>
-                  <span
-                    className={`font-mono text-sm transition-colors duration-500 ${!isLeft ? 'order-2' : ''}`}
-                    style={{ color: isActive ? '#5ba3f5' : 'rgba(255,255,255,0.22)' }}
-                  >
+                  <span className={`font-mono text-sm transition-colors duration-500 ${!isLeft ? 'order-2' : ''}`} style={{ color: isActive ? '#5ba3f5' : 'rgba(255,255,255,0.22)' }}>
                     {pad(i + 1)}
                   </span>
-                  <div
-                    className="h-px w-10 transition-colors duration-500"
-                    style={{ backgroundColor: isActive ? 'rgba(91,163,245,0.40)' : 'rgba(255,255,255,0.10)' }}
-                  />
+                  <div className="h-px w-10 transition-colors duration-500" style={{ backgroundColor: isActive ? 'rgba(91,163,245,0.40)' : 'rgba(255,255,255,0.10)' }} />
                 </div>
-
-                <h2
-                  className="font-black leading-tight mb-4 transition-colors duration-500"
-                  style={{
-                    fontFamily: 'Roboto, system-ui, sans-serif',
-                    fontSize:   'clamp(1.6rem, 2.6vw, 2.8rem)',
-                    color:      isActive ? '#ffffff' : 'rgba(255,255,255,0.18)',
-                  }}
-                >
+                <h2 className="font-black leading-tight mb-4 transition-colors duration-500" style={{ fontFamily: 'Roboto, system-ui, sans-serif', fontSize: 'clamp(1.6rem, 2.6vw, 2.8rem)', color: isActive ? '#ffffff' : 'rgba(255,255,255,0.18)' }}>
                   {s.nazev}
                 </h2>
-
-                <p
-                  className="leading-relaxed transition-colors duration-500"
-                  style={{
-                    fontSize:   '0.95rem',
-                    maxWidth:   '300px',
-                    marginLeft: isLeft ? 0 : 'auto',
-                    color:      isActive ? 'rgba(255,255,255,0.58)' : 'rgba(255,255,255,0.13)',
-                  }}
-                >
+                <p className="leading-relaxed transition-colors duration-500" style={{ fontSize: '0.95rem', maxWidth: '300px', marginLeft: isLeft ? 0 : 'auto', color: isActive ? 'rgba(255,255,255,0.58)' : 'rgba(255,255,255,0.13)' }}>
                   {s.popis}
                 </p>
-
                 {s.detaily && s.detaily.length > 0 && (
-                  <ul
-                    className="hidden lg:flex flex-col mt-5"
-                    style={{ gap: 9, alignItems: isLeft ? 'flex-start' : 'flex-end' }}
-                  >
+                  <ul className="hidden lg:flex flex-col mt-5" style={{ gap: 9, alignItems: isLeft ? 'flex-start' : 'flex-end' }}>
                     {s.detaily.map((d, j) => (
-                      <li
-                        key={j}
-                        className="flex items-center gap-2 text-sm transition-colors duration-500"
-                        style={{
-                          color:         isActive ? 'rgba(255,255,255,0.72)' : 'rgba(255,255,255,0.11)',
-                          flexDirection: isLeft ? 'row' : 'row-reverse',
-                        }}
-                      >
-                        <span
-                          className="rounded-full shrink-0"
-                          style={{ width: 5, height: 5, background: '#1E71C9', opacity: isActive ? 1 : 0.25 }}
-                        />
+                      <li key={j} className="flex items-center gap-2 text-sm transition-colors duration-500" style={{ color: isActive ? 'rgba(255,255,255,0.72)' : 'rgba(255,255,255,0.11)', flexDirection: isLeft ? 'row' : 'row-reverse' }}>
+                        <span className="rounded-full shrink-0" style={{ width: 5, height: 5, background: '#1E71C9', opacity: isActive ? 1 : 0.25 }} />
                         {d}
                       </li>
                     ))}

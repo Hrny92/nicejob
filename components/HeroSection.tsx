@@ -110,7 +110,8 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden cursor-none-force"
+      className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden md:cursor-none-force"
+      style={{ backgroundColor: '#050e1d' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -122,6 +123,7 @@ export default function HeroSection() {
           fill
           className="object-cover object-center"
           priority
+          sizes="100vw"
         />
       </div>
 
@@ -133,76 +135,35 @@ export default function HeroSection() {
         }}
       />
 
+      {/* ── Panáčci + zaměřovač — pouze desktop ─────────────────────────── */}
+      <div className="hidden md:contents">
+        {/* VRSTVA 1: Neviditelní panáčci */}
+        <div className="absolute inset-0 pointer-events-none select-none">
+          {PEOPLE.map((p, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={i} src="/people.svg" alt=""
+              style={{ position: 'absolute', left: p.left, top: p.top, height: p.size, width: 'auto', transform: `rotate(${p.rot}deg)`, opacity: 0, userSelect: 'none' }}
+            />
+          ))}
+        </div>
 
-      {/* ── VRSTVA 1: Neviditelní panáčci (opacity 0 — jen pro hover plochu) ── */}
-      <div className="absolute inset-0 pointer-events-none select-none">
-        {PEOPLE.map((p, i) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={i}
-            src="/people.svg"
-            alt=""
-            style={{
-              position:  'absolute',
-              left:      p.left,
-              top:       p.top,
-              height:    p.size,
-              width:     'auto',
-              transform: `rotate(${p.rot}deg)`,
-              opacity:   0,
-              userSelect: 'none',
-            }}
-          />
-        ))}
-      </div>
+        {/* VRSTVA 2: Reveal panáčci */}
+        <div ref={revealLayerRef} className="absolute inset-0 pointer-events-none select-none" style={{ willChange: 'mask-image' }}>
+          {PEOPLE.map((p, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={i} src="/people.svg" alt=""
+              style={{ position: 'absolute', left: p.left, top: p.top, height: p.size, width: 'auto', transform: `rotate(${p.rot}deg)`, opacity: 0.9, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.6))', userSelect: 'none' }}
+            />
+          ))}
+        </div>
 
-      {/* ── VRSTVA 2: Reveal panáčci — maska sleduje zaměřovač ─────────────── */}
-      <div
-        ref={revealLayerRef}
-        className="absolute inset-0 pointer-events-none select-none"
-        style={{ willChange: 'mask-image' }}
-      >
-        {PEOPLE.map((p, i) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={i}
-            src="/people.svg"
-            alt=""
-            style={{
-              position:  'absolute',
-              left:      p.left,
-              top:       p.top,
-              height:    p.size,
-              width:     'auto',
-              transform: `rotate(${p.rot}deg)`,
-              opacity:   0.9,
-              filter:    'drop-shadow(0 0 8px rgba(255,255,255,0.6))',
-              userSelect: 'none',
-            }}
-          />
-        ))}
-      </div>
-
-      {/* ── Velký zaměřovač sledující kurzor (jen rohové oblouky, bez středového křížku) ── */}
-      <div
-        ref={crosshairRef}
-        className="absolute top-0 left-0 pointer-events-none select-none z-30"
-        style={{
-          width:      CROSSHAIR_SIZE,
-          height:     CROSSHAIR_SIZE,
-          opacity:    0,
-          transition: 'opacity 0.25s ease',
-          willChange: 'transform',
-        }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/loga/zamerovac.svg"
-          alt=""
-          width={CROSSHAIR_SIZE}
-          height={CROSSHAIR_SIZE}
-          style={{ display: 'block' }}
-        />
+        {/* Zaměřovač */}
+        <div ref={crosshairRef} className="absolute top-0 left-0 pointer-events-none select-none z-30"
+          style={{ width: CROSSHAIR_SIZE, height: CROSSHAIR_SIZE, opacity: 0, transition: 'opacity 0.25s ease', willChange: 'transform' }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/loga/zamerovac.svg" alt="" width={CROSSHAIR_SIZE} height={CROSSHAIR_SIZE} style={{ display: 'block' }} />
+        </div>
       </div>
 
       {/* ── Obsah ─────────────────────────────────────────────────────────── */}

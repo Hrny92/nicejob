@@ -19,17 +19,20 @@ const GAP = 16
 
 export default function ServicesAccordion({ podsluzby }: { podsluzby?: PodsluzbaItem[] }) {
   const ITEMS = podsluzby?.length ? podsluzby : FALLBACK
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const sliderRef  = useRef<HTMLDivElement>(null)
-  const [activeIdx, setActiveIdx] = useState(0)
-  const [step, setStep]           = useState(0) // px per card
+  const wrapperRef   = useRef<HTMLDivElement>(null)
+  const sliderRef    = useRef<HTMLDivElement>(null)
+  const [activeIdx, setActiveIdx]       = useState(0)
+  const [step, setStep]                 = useState(0)
+  const [perView, setPerView]           = useState(3) // 1 mobile, 3 desktop
 
-  // Compute card width = (containerWidth - 2*gap) / 3
+  // Přepočet kroku při změně šířky nebo perView
   useEffect(() => {
     const calc = () => {
       if (!wrapperRef.current) return
-      const w = wrapperRef.current.offsetWidth
-      setStep((w - 2 * GAP) / 3 + GAP)
+      const w   = wrapperRef.current.offsetWidth
+      const pv  = w < 640 ? 1 : 3
+      setPerView(pv)
+      setStep(pv === 1 ? w + GAP : (w - (pv - 1) * GAP) / pv + GAP)
     }
     calc()
     const ro = new ResizeObserver(calc)
@@ -37,7 +40,7 @@ export default function ServicesAccordion({ podsluzby }: { podsluzby?: Podsluzba
     return () => ro.disconnect()
   }, [])
 
-  const maxIdx = ITEMS.length - 3
+  const maxIdx = ITEMS.length - perView
 
   const goTo = useCallback((idx: number) => {
     const target = Math.max(0, Math.min(idx, maxIdx))
@@ -145,8 +148,9 @@ export default function ServicesAccordion({ podsluzby }: { podsluzby?: Podsluzba
                 key={i}
                 style={{
                   flexShrink: 0,
-                  // Exactly 1/3 of container minus gaps
-                  width: `calc((100% - ${2 * GAP}px) / 3)`,
+                  width: perView === 1
+                    ? '100%'
+                    : `calc((100% - ${(perView - 1) * GAP}px) / ${perView})`,
                   scrollSnapAlign: 'start',
                   background: '#f4f7fb',
                   borderRadius: 14,
