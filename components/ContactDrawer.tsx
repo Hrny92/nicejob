@@ -88,14 +88,15 @@ export default function ContactDrawer() {
 
   return (
     <>
-      {/* ── Trigger tab + hover karta — pouze desktop ──────── */}
+      {/* ── Trigger tab + hover karta ───────────────────────── */}
       <div
-        className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-40 items-center"
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        {/* Hover karta */}
+        {/* Hover karta — pouze desktop */}
         <div
+          className="hidden md:block"
           style={{
             opacity: hovered ? 1 : 0,
             transform: hovered ? 'translateX(0)' : 'translateX(12px)',

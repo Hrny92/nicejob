@@ -162,7 +162,7 @@ export default function Navbar({ darkHero = false }: { darkHero?: boolean }) {
         {/* Hamburger (mobile) */}
         <button
           className={`
-            md:hidden relative z-50 flex flex-col justify-center items-center
+            md:hidden ml-auto relative z-50 flex flex-col justify-center items-center
             w-9 h-9 gap-[5px] transition-colors duration-300
             ${scrolled || menuOpen || !darkHero ? 'text-brand-dark' : 'text-white'}
           `}
