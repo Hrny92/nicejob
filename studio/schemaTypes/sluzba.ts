@@ -26,27 +26,6 @@ export default defineType({
       description: 'Max. 4–5 bodů. Zobrazí se pod popisem na desktopu.',
     }),
     defineField({
-      name: 'ikona',
-      title: 'Ikona v zaměřovači',
-      type: 'string',
-      options: {
-        list: [
-          { title: '🔍  Nábor / hledání lidí',       value: 'recruit'       },
-          { title: '📋  Audit / hodnocení procesů',   value: 'audit'         },
-          { title: '🎯  Headhunting / přímé oslovení', value: 'hunt'         },
-          { title: '👥  Firemní kultura / tým',        value: 'culture'      },
-          { title: '🎓  Vzdělávání / rozvoj',          value: 'learn'        },
-          { title: '💡  Strategie / poradenství',      value: 'strategy'     },
-          { title: '📊  Data / analytika',             value: 'data'         },
-          { title: '⭐  Employer branding',            value: 'brand'        },
-          { title: '🤝  Onboarding / nástup',         value: 'onboarding'   },
-          { title: '📣  Komunikace / marketing',       value: 'communication'},
-        ],
-        layout: 'radio',
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'foto',
       title: 'Fotografie / vizuál služby',
       type: 'image',
