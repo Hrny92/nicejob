@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useLayoutEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { useContactModal } from '@/context/ContactModalContext'
 
@@ -33,6 +33,12 @@ export default function Navbar({ darkHero = false }: { darkHero?: boolean }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  /* ── Skryj navbar před prvním vyrenderováním ───────────── */
+  useLayoutEffect(() => {
+    const nav = navRef.current
+    if (nav) gsap.set(nav, { y: -70, opacity: 0 })
+  }, [])
+
   /* ── Desktop entrance animace ──────────────────────────── */
   useEffect(() => {
     const nav  = navRef.current
@@ -43,13 +49,12 @@ export default function Navbar({ darkHero = false }: { darkHero?: boolean }) {
 
     const items = Array.from(list.children) as HTMLElement[]
 
-    gsap.set(nav,   { y: -70, opacity: 0 })
     gsap.set(logo,  { opacity: 0, x: -14 })
     gsap.set(items, { opacity: 0, y: -10 })
     gsap.set(cta,   { opacity: 0, x: 14 })
 
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-    tl.to(nav,   { y: 0, opacity: 1, duration: 0.7 })
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.8 })
+    tl.to(nav,   { y: 0, opacity: 1, duration: 0.6 })
       .to(logo,  { opacity: 1, x: 0,  duration: 0.45 }, '-=0.4')
       .to(items, { opacity: 1, y: 0,  duration: 0.38, stagger: 0.07 }, '-=0.3')
       .to(cta,   { opacity: 1, x: 0,  duration: 0.45 }, '-=0.3')
