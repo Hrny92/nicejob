@@ -159,7 +159,7 @@ function DesktopServices({ sluzby }: { sluzby: SluzbaItem[] }) {
                 <h2 className="font-black leading-tight mb-4 transition-colors duration-500" style={{ fontFamily: 'Roboto, system-ui, sans-serif', fontSize: 'clamp(1.6rem, 2.6vw, 2.8rem)', color: isActive ? '#ffffff' : 'rgba(255,255,255,0.18)' }}>
                   {s.nazev}
                 </h2>
-                <p className="leading-relaxed transition-colors duration-500" style={{ fontSize: '0.95rem', maxWidth: '300px', marginLeft: isLeft ? 0 : 'auto', color: isActive ? 'rgba(255,255,255,0.58)' : 'rgba(255,255,255,0.13)' }}>
+                <p className="leading-relaxed transition-colors duration-500" style={{ fontSize: '0.95rem', maxWidth: '500px', marginLeft: isLeft ? 0 : 'auto', color: isActive ? 'rgba(255,255,255,0.58)' : 'rgba(255,255,255,0.13)' }}>
                   {s.popis}
                 </p>
                 {s.detaily && s.detaily.length > 0 && (
