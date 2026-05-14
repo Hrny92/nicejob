@@ -6,7 +6,7 @@ import { gsap } from 'gsap'
 
 const CONTACT = {
   name:     'Mgr. Zdeňka Kocandová',
-  title:    'ředitelka společnosti',
+  title:    'Vaše HR konzultantka',
   phone:    '+420 737 266 272',
   email:    'kocandova@mztraining.cz',
   linkedin: 'https://www.linkedin.com/in/zdenkakocandova/',
@@ -127,7 +127,7 @@ export default function ContactDrawer() {
                   Zdeňka Kocandová
                 </p>
                 <p style={{ fontSize: '0.7rem', color: '#94a3b8', marginTop: 1 }}>
-                  ředitelka společnosti
+                  Vaše HR konzultantka
                 </p>
               </div>
             </div>

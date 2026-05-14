@@ -128,7 +128,12 @@ export default function Footer() {
                         gap-4 py-6 text-[0.78rem]"
           style={{ color: 'rgba(255,255,255,0.22)' }}>
 
-          <span>© {year} MZ Training s.r.o. Všechna práva vyhrazena.</span>
+          <div className="flex flex-col gap-1">
+            <span>© {year} MZ Training s.r.o. Všechna práva vyhrazena.</span>
+            <span style={{ color: 'rgba(255,255,255,0.15)', fontSize: '0.72rem', maxWidth: '60ch' }}>
+              NICEJOB je obchodní značka společnosti MZ training s.r.o., IČO 24192279, se sídlem Strančická 339/43, Praha 10, držitele povolení MPSV ke zprostředkování zaměstnání.
+            </span>
+          </div>
 
           <div className="flex items-center gap-6">
             {LEGAL_LINKS.map(({ label, href }) => (
