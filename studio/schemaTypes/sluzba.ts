@@ -16,7 +16,7 @@ export default defineType({
       title: 'Krátký popis',
       type: 'text',
       rows: 3,
-      validation: (Rule) => Rule.required().max(280),
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'detaily',
