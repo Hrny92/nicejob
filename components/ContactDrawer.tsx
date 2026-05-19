@@ -91,12 +91,12 @@ export default function ContactDrawer() {
       {/* ── Trigger tab + hover karta ───────────────────────── */}
       <div
         className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center"
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
       >
         {/* Hover karta — pouze desktop */}
         <div
           className="hidden md:block"
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
           style={{
             opacity: hovered ? 1 : 0,
             transform: hovered ? 'translateX(0)' : 'translateX(12px)',
@@ -189,6 +189,8 @@ export default function ContactDrawer() {
         <button
           ref={btnRef}
           onClick={open}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
           aria-label="Rychlý kontakt"
           className="flex flex-col items-center gap-2
                      bg-brand-blue text-white

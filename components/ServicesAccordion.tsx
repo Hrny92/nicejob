@@ -55,6 +55,19 @@ export default function ServicesAccordion({ podsluzby }: { podsluzby?: Podsluzba
     setActiveIdx(Math.max(0, Math.min(idx, maxIdx)))
   }, [step, maxIdx])
 
+  // Automatická rotace každé 4 sekundy
+  useEffect(() => {
+    if (step === 0) return
+    const id = setInterval(() => {
+      setActiveIdx(prev => {
+        const next = prev >= maxIdx ? 0 : prev + 1
+        sliderRef.current?.scrollTo({ left: next * step, behavior: 'smooth' })
+        return next
+      })
+    }, 4000)
+    return () => clearInterval(id)
+  }, [step, maxIdx])
+
   return (
     <section id="sluzby-detail" className="bg-white" style={{ padding: 'clamp(5rem, 10vw, 8rem) 0' }}>
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
