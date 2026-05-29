@@ -5,6 +5,8 @@ import { PortableText } from '@portabletext/react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ContactDrawer from '@/components/ContactDrawer'
+import ContactModal from '@/components/ContactModal'
+import PoslatZivotopisButton from '@/components/PoslatZivotopisButton'
 import StructuredData from '@/components/StructuredData'
 import { buildMetadata, schemaBreadcrumb, schemaJobPosting, SITE_URL } from '@/lib/seo'
 
@@ -247,14 +249,7 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
                 Napište nám a náš tým se vám ozve do 24 hodin.
               </p>
 
-              <a
-                href={`mailto:kocandova@mztraining.cz?subject=Zájem o pozici: ${encodeURIComponent(p.nazev)}`}
-                className="block w-full text-center bg-brand-dark text-white
-                           px-5 py-3.5 rounded-full text-sm font-semibold mb-3
-                           hover:bg-brand-mid transition-all duration-300"
-              >
-                Poslat životopis →
-              </a>
+              <PoslatZivotopisButton poziceNazev={p.nazev} />
 
               <Link
                 href="/pozice"
@@ -298,6 +293,7 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
     </main>
     <Footer />
     <ContactDrawer />
-    </>
+    <ContactModal />
+</>
   )
 }

@@ -4,22 +4,26 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 
 type ContactModalContextType = {
   isOpen: boolean
-  open: () => void
+  jobTitle: string
+  open: (jobTitle?: string) => void
   close: () => void
 }
 
 const ContactModalContext = createContext<ContactModalContextType>({
   isOpen: false,
+  jobTitle: '',
   open: () => {},
   close: () => {},
 })
 
 export function ContactModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [jobTitle, setJobTitle] = useState('')
   return (
     <ContactModalContext.Provider value={{
       isOpen,
-      open:  () => setIsOpen(true),
+      jobTitle,
+      open: (title = '') => { setJobTitle(title); setIsOpen(true) },
       close: () => setIsOpen(false),
     }}>
       {children}

@@ -203,7 +203,7 @@ export default function AboutSection({ data }: { data?: ONasData | null }) {
           </ul>
 
           <button
-            onClick={openModal}
+            onClick={() => openModal()}
             className="group self-start inline-flex items-center gap-2
                        bg-brand-dark text-white px-7 py-3.5 rounded-full
                        text-sm font-semibold transition-all duration-300
@@ -224,7 +224,7 @@ export default function AboutSection({ data }: { data?: ONasData | null }) {
             <div className="absolute -bottom-4 -right-4 w-full h-full rounded-3xl border-2 border-brand-blue/15 -z-10" />
 
             <Image
-              src="/Kocandova.png"
+              src="/kocandova22.jpeg"
               alt="Mgr. Zdeňka Kocandová — Nice Job"
               fill
               className="object-cover object-top"

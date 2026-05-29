@@ -112,7 +112,7 @@ export default function Footer() {
 
             {/* CTA */}
             <button
-              onClick={openModal}
+              onClick={() => openModal()}
               className="inline-flex items-center gap-2 mt-2 self-start md:self-end
                          text-sm font-semibold px-5 py-2.5 rounded-full
                          transition-all duration-300 hover:gap-3 hover:bg-[#a01220]"

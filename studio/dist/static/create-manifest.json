@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "createdAt": "2026-05-05T20:11:31.696Z",
+  "createdAt": "2026-05-14T06:56:52.578Z",
   "workspaces": [
     {
       "name": "nicejob",
@@ -12,7 +12,7 @@
       "mediaLibrary": {
         "enabled": false
       },
-      "schema": "31aafc25.create-schema.json",
+      "schema": "bc119566.create-schema.json",
       "tools": "0144c35e.create-tools.json"
     }
   ]

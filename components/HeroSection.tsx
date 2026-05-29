@@ -108,7 +108,7 @@ export default function HeroSection() {
 
         <div ref={ctaRef} className="flex items-center gap-4">
           <button
-            onClick={openModal}
+            onClick={() => openModal()}
             className="group inline-flex items-center gap-3 bg-white text-brand-dark px-9 py-4 rounded-full text-base font-semibold shadow-xl shadow-black/20 transition-all duration-300 hover:bg-brand-blue hover:text-white hover:shadow-2xl hover:shadow-brand-blue/30 hover:gap-5"
           >
             Chci zjistit více

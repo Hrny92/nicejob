@@ -151,7 +151,7 @@ export default function Navbar({ darkHero = false }: { darkHero?: boolean }) {
         {/* Desktop CTA — přitlačen doprava */}
         <div ref={ctaRef} className="hidden md:block ml-auto">
           <button
-            onClick={openModal}
+            onClick={() => openModal()}
             className={`group inline-flex items-center gap-2
                        px-6 py-2.5 rounded-full
                        text-sm font-semibold transition-all duration-300 hover:gap-3

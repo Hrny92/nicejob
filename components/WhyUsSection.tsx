@@ -166,7 +166,7 @@ export default function WhyUsSection({ data }: { data?: ProcMyData | null }) {
         {/* CTA */}
         <div className="flex justify-center mt-14">
           <button
-            onClick={openModal}
+            onClick={() => openModal()}
             className="group inline-flex items-center gap-2
                        bg-brand-dark text-white px-7 py-3.5 rounded-full
                        text-sm font-semibold transition-all duration-300
