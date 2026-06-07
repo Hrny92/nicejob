@@ -355,12 +355,12 @@ export default function ContactModal() {
               {/* Příloha */}
               <div>
                 <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: 6 }}>
-                  Příloha <span style={{ color: '#94a3b8', fontWeight: 400 }}>(životopis, PDF — max. 10 MB)</span>
+                  Příloha <span style={{ color: '#94a3b8', fontWeight: 400 }}>(PDF, Word, Excel, ODT, JPEG — max. 10 MB)</span>
                 </label>
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.jpg,.jpeg,.png"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                   id="cform-file"
