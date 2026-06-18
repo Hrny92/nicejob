@@ -429,7 +429,7 @@ export default function ContactModal() {
                   borderRadius: 10, padding: '10px 14px',
                   color: '#be1622', fontSize: '0.85rem',
                 }}>
-                  Nepodařilo se odeslat zprávu. Zkuste to prosím znovu nebo nás kontaktujte na kocandova@mztraining.cz.
+                  Nepodařilo se odeslat zprávu. Zkuste to prosím znovu nebo nás kontaktujte na kocandova@nicejob.cz.
                 </p>
               )}
 

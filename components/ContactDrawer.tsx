@@ -353,7 +353,7 @@ export default function ContactDrawer() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-[11px] text-gray-400 uppercase tracking-wider font-medium mb-0.5">Web</p>
-                  <p className="text-sm font-semibold text-gray-800 truncate">mztraining.cz</p>
+                  <p className="text-sm font-semibold text-gray-800 truncate">nicejob.cz</p>
                 </div>
               </a>
             </div>
