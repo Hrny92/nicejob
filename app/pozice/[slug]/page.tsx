@@ -5,7 +5,6 @@ import { PortableText } from '@portabletext/react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ContactDrawer from '@/components/ContactDrawer'
-import ContactModal from '@/components/ContactModal'
 import PoslatZivotopisButton from '@/components/PoslatZivotopisButton'
 import StructuredData from '@/components/StructuredData'
 import { buildMetadata, schemaBreadcrumb, schemaJobPosting, SITE_URL } from '@/lib/seo'
@@ -293,7 +292,6 @@ export default async function PoziceDetailPage({ params }: { params: { slug: str
     </main>
     <Footer />
     <ContactDrawer />
-    <ContactModal />
 </>
   )
 }
