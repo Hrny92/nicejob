@@ -360,7 +360,7 @@ export default function ContactModal() {
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.jpg,.jpeg,.png"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.odp,.ods,.ppt,.pptx,.jpg,.jpeg,.png"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                   id="cform-file"

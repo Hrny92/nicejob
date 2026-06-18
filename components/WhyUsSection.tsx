@@ -9,7 +9,7 @@ const FALLBACK: ProcMyData = {
   podnadpis: 'Sázíme na data, intuici a moderní technologie.',
   statistiky: [
     { _key: 's1', hodnota: '200+',   popis: 'Obsazených pozic',    podpis: 'od vzniku agentury' },
-    { _key: 's2', hodnota: '98%',    popis: 'Spokojenost klientů', podpis: 'dle interního průzkumu' },
+    { _key: 's2', hodnota: '100%',   popis: 'Transparentnost',     podpis: 'v komunikaci i procesech' },
     { _key: 's3', hodnota: '14 dní', popis: 'Průměrná doba',       podpis: 'obsazení role' },
   ],
   pilire: [

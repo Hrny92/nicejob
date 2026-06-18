@@ -84,11 +84,11 @@ export default function Footer() {
               Kontakt
             </span>
             <a
-              href="mailto:kocandova@mztraining.cz"
+              href="mailto:kocandova@nicejob.cz"
               style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem' }}
               className="hover:text-white transition-colors duration-200 w-fit"
             >
-              kocandova@mztraining.cz
+              kocandova@nicejob.cz
             </a>
             <a
               href="tel:+420737266272"

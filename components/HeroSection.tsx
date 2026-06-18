@@ -57,7 +57,7 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden md:cursor-crosshair"
+      className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden"
       style={{ backgroundColor: '#050e1d' }}
     >
       {/* ── Fotografie na pozadí ───────────────────────────── */}

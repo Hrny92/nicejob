@@ -8,7 +8,7 @@ const CONTACT = {
   name:     'Mgr. Zdeňka Kocandová',
   title:    'Vaše HR konzultantka',
   phone:    '+420 737 266 272',
-  email:    'kocandova@mztraining.cz',
+  email:    'kocandova@nicejob.cz',
   linkedin: 'https://www.linkedin.com/in/zdenkakocandova/',
   web:      'https://mztraining.cz/',
   photo:    '/contact-photo.jpg',
